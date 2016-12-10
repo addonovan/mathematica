@@ -1,0 +1,789 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     38170,        781]
+NotebookOptionsPosition[     37827,        764]
+NotebookOutlinePosition[     38192,        780]
+CellTagsIndexPosition[     38149,        777]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"Panel", "[", "\[IndentingNewLine]", 
+  RowBox[{"DynamicModule", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"x", " ", "=", " ", 
+       SuperscriptBox["t", "2"]}], ",", "\[IndentingNewLine]", 
+      RowBox[{"m", " ", "=", " ", "1"}], ",", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"xInit", "=", "0"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"vInit", "=", "0"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"vInput", "=", "0"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"aInput", "=", "0"}], ",", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"editingEquation", "=", "0"}], ",", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"tmin", "=", "0"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"tmax", " ", "=", " ", "10"}]}], "\[IndentingNewLine]", "}"}], 
+    ",", "\[IndentingNewLine]", 
+    RowBox[{"Column", "@", 
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Row", "@", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+          "column", " ", "of", " ", "time", " ", "and", " ", "mass", " ", 
+           "settings"}], " ", "*)"}], "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Dynamic", "[", 
+           RowBox[{"Column", "[", 
+            RowBox[{
+             RowBox[{"{", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"Row", "@", 
+                RowBox[{"{", 
+                 RowBox[{"\"\<m(t) = \>\"", ",", 
+                  RowBox[{"InputField", "[", 
+                   RowBox[{"Dynamic", "[", "m", "]"}], "]"}], ",", 
+                  "\"\<[kg]\>\""}], "}"}]}], ",", "\[IndentingNewLine]", 
+               RowBox[{"Row", "@", 
+                RowBox[{"{", 
+                 RowBox[{
+                 "\"\<\!\(\*SubscriptBox[\(t\), \(min\)]\) = \>\"", ",", 
+                  RowBox[{"InputField", "[", 
+                   RowBox[{
+                    RowBox[{"Dynamic", "[", "tmin", "]"}], ",", "Number"}], 
+                   "]"}], ",", "\"\<[s]\>\""}], "}"}]}], ",", 
+               "\[IndentingNewLine]", 
+               RowBox[{"Row", "@", 
+                RowBox[{"{", 
+                 RowBox[{
+                 "\"\<\!\(\*SubscriptBox[\(t\), \(max\)]\) = \>\"", ",", 
+                  RowBox[{"InputField", "[", 
+                   RowBox[{
+                    RowBox[{"Dynamic", "[", "tmax", "]"}], ",", "Number"}], 
+                   "]"}], ",", "\"\<[s]\>\""}], "}"}]}]}], 
+              "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+             RowBox[{"Alignment", "\[Rule]", "\"\<=\>\""}]}], 
+            "\[IndentingNewLine]", "]"}], "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Spacer", "[", "25", "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"(*", " ", 
+           RowBox[{"column", " ", "of", " ", "kinematic", " ", "settings"}], 
+           " ", "*)"}], "\[IndentingNewLine]", 
+          RowBox[{"Dynamic", "[", 
+           RowBox[{"Column", "[", 
+            RowBox[{
+             RowBox[{"{", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"set", "=", 
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                   RowBox[{"editingEquation", "\[Equal]", "0"}], ",", 
+                   "\[IndentingNewLine]", 
+                   RowBox[{"{", 
+                    RowBox[{"Row", "@", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<x(t) = \>\"", ",", 
+                    RowBox[{"InputField", "[", 
+                    RowBox[{"Dynamic", "[", "x", "]"}], "]"}], ",", 
+                    "\"\<[m]\>\""}], "}"}]}], "}"}], ",", 
+                   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+                   RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"editingEquation", "\[Equal]", "1"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Row", "@", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<v(t) = \>\"", ",", 
+                    RowBox[{"InputField", "[", 
+                    RowBox[{"Dynamic", "[", "vInput", "]"}], "]"}], ",", 
+                    "\"\<[m \!\(\*SuperscriptBox[\(s\), \(-1\)]\)]\>\""}], 
+                    "}"}]}], ",", "\[IndentingNewLine]", 
+                    RowBox[{"Row", "@", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<x(0) = \>\"", ",", 
+                    RowBox[{"InputField", "[", 
+                    RowBox[{"Dynamic", "[", "xInit", "]"}], "]"}], ",", 
+                    "\"\<[m]\>\""}], "}"}]}]}], " ", "}"}], ",", 
+                    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"editingEquation", "\[Equal]", "2"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Row", "@", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<a(t) = \>\"", ",", 
+                    RowBox[{"InputField", "[", 
+                    RowBox[{"Dynamic", "[", "aInput", "]"}], "]"}], ",", 
+                    "\"\<[m \!\(\*SuperscriptBox[\(s\), \(-2\)]\)]\>\""}], 
+                    "}"}]}], ",", "\[IndentingNewLine]", 
+                    RowBox[{"Row", "@", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<v(0) = \>\"", ",", 
+                    RowBox[{"InputField", "[", 
+                    RowBox[{"Dynamic", "[", "vInit", "]"}], "]"}], ",", 
+                    "\"\<[m \!\(\*SuperscriptBox[\(s\), \(-1\)]\)]\>\""}], 
+                    "}"}]}], ",", "\[IndentingNewLine]", 
+                    RowBox[{"Row", "@", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<x(0) = \>\"", ",", 
+                    RowBox[{"InputField", "[", 
+                    RowBox[{"Dynamic", "[", "xInit", "]"}], "]"}], ",", 
+                    "\"\<[m]\>\""}], "}"}]}]}], "}"}], ",", 
+                    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+                    "\"\<There was a problem :/\>\""}], "\[IndentingNewLine]",
+                     "]"}]}], "\[IndentingNewLine]", "]"}]}], 
+                  "\[IndentingNewLine]", "]"}]}], ";", "\[IndentingNewLine]", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Length", "[", "set", "]"}], "\[GreaterEqual]", 
+                   "1"}], ",", 
+                  RowBox[{"Extract", "[", 
+                   RowBox[{"set", ",", "1"}], "]"}], ",", 
+                  RowBox[{"Invisible", "[", 
+                   RowBox[{"Row", "@", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<f(x) = \>\"", ",", 
+                    RowBox[{"InputField", "[", "]"}]}], "}"}]}], "]"}]}], 
+                 "]"}]}], ",", "\[IndentingNewLine]", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Length", "[", "set", "]"}], "\[GreaterEqual]", 
+                  "2"}], ",", 
+                 RowBox[{"Extract", "[", 
+                  RowBox[{"set", ",", "2"}], "]"}], ",", 
+                 RowBox[{"Invisible", "[", 
+                  RowBox[{"Row", "@", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\<f(x) = \>\"", ",", 
+                    RowBox[{"InputField", "[", "]"}]}], "}"}]}], "]"}]}], 
+                "]"}], ",", "\[IndentingNewLine]", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Length", "[", "set", "]"}], "\[GreaterEqual]", 
+                  "3"}], ",", 
+                 RowBox[{"Extract", "[", 
+                  RowBox[{"set", ",", "3"}], "]"}], ",", 
+                 RowBox[{"Invisible", "[", 
+                  RowBox[{"Row", "@", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\<f(x) = \>\"", ",", 
+                    RowBox[{"InputField", "[", "]"}]}], "}"}]}], "]"}]}], 
+                "]"}]}], "\[IndentingNewLine]", "}"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{"Alignment", "\[Rule]", "\"\<=\>\""}]}], 
+            "\[IndentingNewLine]", "]"}], "]"}], ","}], "\[IndentingNewLine]",
+          "}"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"Button", " ", "hell"}], " ", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"Row", "@", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Button", "[", 
+           RowBox[{"\"\<x(t)\>\"", ",", "\[IndentingNewLine]", 
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"editingEquation", "\[Equal]", "2"}], ",", 
+                "\[IndentingNewLine]", 
+                RowBox[{"x", "=", 
+                 RowBox[{
+                  RowBox[{"\[Integral]", 
+                   RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"\[Integral]", 
+                    RowBox[{"aInput", " ", 
+                    RowBox[{"\[DifferentialD]", "t"}]}]}], ")"}], "+", 
+                    "vInit"}], ")"}], " ", 
+                    RowBox[{"\[DifferentialD]", "t"}]}]}], "+", "xInit"}]}], 
+                ",", "\[IndentingNewLine]", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"editingEquation", "\[Equal]", "1"}], ",", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"x", "=", 
+                   RowBox[{
+                    RowBox[{"\[Integral]", 
+                    RowBox[{"vInput", " ", 
+                    RowBox[{"\[DifferentialD]", "t"}]}]}], "+", "xInit"}]}], 
+                  ",", 
+                  RowBox[{"Blank", "[", "]"}]}], "\[IndentingNewLine]", 
+                 "]"}]}], "\[IndentingNewLine]", "]"}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"editingEquation", "=", "0"}]}], "\[IndentingNewLine]", 
+             "}"}]}], " ", "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Button", "[", 
+           RowBox[{"\"\<v(t)\>\"", ",", "\[IndentingNewLine]", 
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"editingEquation", "\[Equal]", "2"}], ",", 
+                "\[IndentingNewLine]", 
+                RowBox[{"{", "\[IndentingNewLine]", 
+                 RowBox[{
+                  RowBox[{"vInput", "=", 
+                   RowBox[{
+                    RowBox[{"\[Integral]", 
+                    RowBox[{"aInput", " ", 
+                    RowBox[{"\[DifferentialD]", "t"}]}]}], "+", "vInit"}]}], 
+                  ";", 
+                  RowBox[{"x", "=", 
+                   RowBox[{
+                    RowBox[{"\[Integral]", 
+                    RowBox[{"vInput", " ", 
+                    RowBox[{"\[DifferentialD]", "t"}]}]}], "+", "xInit"}]}]}],
+                  "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"editingEquation", "\[Equal]", "0"}], ",", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"vInput", "=", 
+                   RowBox[{
+                    RowBox[{"D", "[", 
+                    RowBox[{"x", ",", "t"}], "]"}], "+", "vInit"}]}], ",", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"Blank", "[", "]"}]}], "\[IndentingNewLine]", 
+                 "]"}]}], "\[IndentingNewLine]", "]"}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"editingEquation", "=", "1"}]}], "\[IndentingNewLine]", 
+             "}"}]}], " ", "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Button", "[", 
+           RowBox[{"\"\<a(t)\>\"", ",", "\[IndentingNewLine]", 
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"editingEquation", "\[Equal]", "0"}], ",", 
+                "\[IndentingNewLine]", 
+                RowBox[{"aInput", "=", 
+                 RowBox[{"D", "[", 
+                  RowBox[{"x", ",", 
+                   RowBox[{"{", 
+                    RowBox[{"t", ",", "2"}], "}"}]}], "]"}]}], ",", 
+                "\[IndentingNewLine]", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"editingEquation", "\[Equal]", "1"}], ",", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"aInput", "=", 
+                   RowBox[{"D", "[", 
+                    RowBox[{"vInput", ",", "t"}], "]"}]}], ",", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"Blank", "[", "]"}]}], "\[IndentingNewLine]", 
+                 "]"}]}], "\[IndentingNewLine]", "]"}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"editingEquation", "=", "2"}]}], "\[IndentingNewLine]", 
+             "}"}]}], " ", "]"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Button", "[", 
+           RowBox[{"\"\<Set\>\"", ",", 
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"editingEquation", "\[Equal]", "2"}], ",", 
+                "\[IndentingNewLine]", 
+                RowBox[{"x", "=", 
+                 RowBox[{
+                  RowBox[{"\[Integral]", 
+                   RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"\[Integral]", 
+                    RowBox[{"aInput", " ", 
+                    RowBox[{"\[DifferentialD]", "t"}]}]}], ")"}], "+", 
+                    "vInit"}], ")"}], " ", 
+                    RowBox[{"\[DifferentialD]", "t"}]}]}], "+", "xInit"}]}], 
+                ",", "\[IndentingNewLine]", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"editingEquation", "\[Equal]", "1"}], ",", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"x", "=", 
+                   RowBox[{
+                    RowBox[{"\[Integral]", 
+                    RowBox[{"vInput", " ", 
+                    RowBox[{"\[DifferentialD]", "t"}]}]}], "+", "xInit"}]}], 
+                  ",", 
+                  RowBox[{"Blank", "[", "]"}]}], "\[IndentingNewLine]", 
+                 "]"}]}], "\[IndentingNewLine]", "]"}], ";"}], 
+             "\[IndentingNewLine]", "}"}]}], " ", "]"}]}], 
+         "\[IndentingNewLine]", "}"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"Dynamic", "[", "\[IndentingNewLine]", 
+        RowBox[{"Grid", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"MapIndexed", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"{", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"Extract", "[", 
+                RowBox[{"#", ",", "1"}], "]"}], ",", "\[IndentingNewLine]", 
+               RowBox[{"Spacer", "[", "20", "]"}], ",", "\[IndentingNewLine]", 
+               RowBox[{"Row", "[", 
+                RowBox[{"{", "\[IndentingNewLine]", 
+                 RowBox[{"Grid", "@", 
+                  RowBox[{"{", "\[IndentingNewLine]", 
+                   RowBox[{"MapIndexed", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Column", "[", 
+                    RowBox[{
+                    RowBox[{"{", "\[IndentingNewLine]", 
+                    RowBox[{
+                    RowBox[{"Dynamic", "[", "\[IndentingNewLine]", 
+                    RowBox[{"StringForm", "[", 
+                    RowBox[{"\"\<`1`(t)=`2`\>\"", ",", 
+                    RowBox[{"Extract", "[", 
+                    RowBox[{"#", ",", "2"}], "]"}], ",", 
+                    RowBox[{"Expand", "[", 
+                    RowBox[{"Simplify", "[", 
+                    RowBox[{"Extract", "[", 
+                    RowBox[{"#", ",", "1"}], "]"}], "]"}], "]"}]}], "]"}], 
+                    "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+                    RowBox[{"Dynamic", "[", "\[IndentingNewLine]", 
+                    RowBox[{"Plot", "[", "\[IndentingNewLine]", 
+                    RowBox[{
+                    RowBox[{"Extract", "[", 
+                    RowBox[{"#", ",", "1"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"t", ",", "tmin", ",", "tmax"}], "}"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"FrameLabel", "\[Rule]", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<Time\>\"", ",", 
+                    RowBox[{"Extract", "[", 
+                    RowBox[{"#", ",", "3"}], "]"}]}], "}"}]}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"RotateLabel", "\[Rule]", "True"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"ImageSize", "\[Rule]", "Medium"}]}], 
+                    "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+                    "]"}], ",", "\[IndentingNewLine]", 
+                    RowBox[{"Spacer", "[", "5", "]"}]}], 
+                    "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+                    RowBox[{"Alignment", "\[Rule]", "Right"}]}], 
+                    "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+                    "&"}], ",", " ", 
+                    RowBox[{"Rest", "[", "#", "]"}]}], "\[IndentingNewLine]", 
+                    "]"}], "\[IndentingNewLine]", "}"}]}], 
+                 "\[IndentingNewLine]", "}"}], "]"}], ",", 
+               "\[IndentingNewLine]", 
+               RowBox[{"Spacer", "[", "2", "]"}]}], "\[IndentingNewLine]", 
+              "}"}], " ", "&"}], " ", ",", "\[IndentingNewLine]", 
+            RowBox[{"(*", " ", 
+             RowBox[{
+             "The", " ", "data", " ", "passed", " ", "to", " ", "the", " ", 
+              "grid", " ", "for", " ", "formatting"}], " ", "*)"}], 
+            "\[IndentingNewLine]", 
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{"(*", 
+              RowBox[{
+               RowBox[{"temporary", " ", "variables"}], ",", " ", 
+               RowBox[{
+               "these", " ", "get", " ", "reset", " ", "every", " ", "time", 
+                " ", "x", " ", "changes"}]}], "*)"}], "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"v", ":=", 
+                RowBox[{"D", "[", 
+                 RowBox[{"x", ",", "t"}], "]"}]}], ";", "\[IndentingNewLine]", 
+               RowBox[{"a", ":=", 
+                RowBox[{"D", "[", 
+                 RowBox[{"v", ",", "t"}], "]"}]}], ";", "\[IndentingNewLine]", 
+               RowBox[{"p", ":=", 
+                RowBox[{"m", " ", "v"}]}], ";", "\[IndentingNewLine]", 
+               RowBox[{"F", ":=", 
+                RowBox[{"D", "[", 
+                 RowBox[{"p", ",", "t"}], "]"}]}], ";", "\[IndentingNewLine]", 
+               RowBox[{"Ke", ":=", 
+                RowBox[{
+                 FractionBox["1", "2"], "m", " ", 
+                 SuperscriptBox["v", "2"]}]}], ";", "\[IndentingNewLine]", 
+               RowBox[{"P", ":=", 
+                RowBox[{"F", " ", "v"}]}], ";", "\[IndentingNewLine]", 
+               RowBox[{"(*", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"{", " ", "\[IndentingNewLine]", 
+                  RowBox[{
+                   RowBox[{"row", " ", "title"}], ",", "\[IndentingNewLine]", 
+                   RowBox[{"{", 
+                    RowBox[{"function", ",", " ", "symbol", ",", " ", 
+                    RowBox[{"name", " ", "[", "unit", "]"}]}], "}"}], ",", 
+                   "\[IndentingNewLine]", "..."}], "\[IndentingNewLine]", 
+                  "}"}], ",", "\[IndentingNewLine]", "..."}], 
+                "\[IndentingNewLine]", "*)"}], "\[IndentingNewLine]", 
+               RowBox[{"{", "\[IndentingNewLine]", 
+                RowBox[{"\"\<Kinematics\>\"", ",", "\[IndentingNewLine]", 
+                 RowBox[{"{", 
+                  RowBox[{
+                  "x", ",", 
+                   "\"\<\!\(\*OverscriptBox[\(x\), \(\[RightVector]\)]\)\>\"",
+                    ",", "\"\<Position [m]\>\""}], "}"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"{", 
+                  RowBox[{
+                  "v", ",", 
+                   "\"\<\!\(\*OverscriptBox[\(v\), \(\[RightVector]\)]\)\>\"",
+                    ",", "\"\<Velocity [m \!\(\*SuperscriptBox[\(s\), \(-1\)]\
+\)]\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+                 RowBox[{"{", 
+                  RowBox[{
+                  "a", ",", 
+                   "\"\<\!\(\*OverscriptBox[\(a\), \(\[RightVector]\)]\)\>\"",
+                    ",", "\"\<Acceleration [m \!\(\*SuperscriptBox[\(s\), \
+\(-2\)]\)]\>\""}], "}"}]}], "\[IndentingNewLine]", "}"}]}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"{", "\[IndentingNewLine]", 
+               RowBox[{"\"\<Mass\>\"", ",", "\[IndentingNewLine]", 
+                RowBox[{"{", 
+                 RowBox[{"m", ",", "\"\<m\>\"", ",", "\"\<Mass [kg]\>\""}], 
+                 "}"}], ",", "\[IndentingNewLine]", 
+                RowBox[{"{", 
+                 RowBox[{
+                 "p", ",", 
+                  "\"\<\!\(\*OverscriptBox[\(p\), \(\[RightVector]\)]\)\>\"", 
+                  ",", "\"\<Momentum [kg m \!\(\*SuperscriptBox[\(s\), \
+\(-1\)]\)]\>\""}], "}"}], ",", "\[IndentingNewLine]", 
+                RowBox[{"{", 
+                 RowBox[{
+                 "F", ",", 
+                  "\"\<\!\(\*OverscriptBox[\(F\), \(\[RightVector]\)]\)\>\"", 
+                  ",", "\"\<Force [N]\>\""}], "}"}]}], "\[IndentingNewLine]", 
+               "}"}], ",", "\[IndentingNewLine]", 
+              RowBox[{"{", "\[IndentingNewLine]", 
+               RowBox[{"\"\<Energy\>\"", ",", "\[IndentingNewLine]", 
+                RowBox[{"{", 
+                 RowBox[{
+                 "Ke", ",", "\"\<\!\(\*SubscriptBox[\(E\), \(K\)]\)\>\"", 
+                  ",", "\"\<Kinetic [J]\>\""}], "}"}], ",", 
+                "\[IndentingNewLine]", 
+                RowBox[{"{", 
+                 RowBox[{
+                 "P", ",", " ", "\"\<P\>\"", ",", "\"\<Power [W]\>\""}], 
+                 "}"}]}], "\[IndentingNewLine]", "}"}]}], 
+             "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", "]"}], 
+          ",", "\[IndentingNewLine]", 
+          RowBox[{"Alignment", "\[Rule]", "Left"}]}], "\[IndentingNewLine]", 
+         "]"}], "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
+      "}"}]}]}], "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.68368240822585*^9, 3.6836824294352484`*^9}, {
+   3.6836825063196955`*^9, 3.683682559460762*^9}, {3.6836826213579826`*^9, 
+   3.683682968941674*^9}, {3.6836830072583156`*^9, 3.683683175406559*^9}, {
+   3.6836832093538294`*^9, 3.6836834011339293`*^9}, {3.6836834553547463`*^9, 
+   3.6836836323578067`*^9}, {3.6836836702524586`*^9, 
+   3.6836838049855175`*^9}, {3.683683928084611*^9, 3.6836839474782143`*^9}, {
+   3.683684111452206*^9, 3.6836841708772593`*^9}, {3.6836842277515025`*^9, 
+   3.683684229916254*^9}, {3.683684387251865*^9, 3.683684425076198*^9}, {
+   3.6836844678409715`*^9, 3.6836845031900053`*^9}, {3.6836847232754*^9, 
+   3.683684832138054*^9}, {3.683684930259634*^9, 3.683684975085827*^9}, {
+   3.6836850057700057`*^9, 3.683685094810708*^9}, 3.6836851293612576`*^9, {
+   3.683685173928486*^9, 3.683685176631901*^9}, 3.6836852871905212`*^9, {
+   3.683685328382395*^9, 3.6836853830757093`*^9}, {3.6836854133757925`*^9, 
+   3.6836854599602947`*^9}, {3.683685595084016*^9, 3.6836858022846785`*^9}, {
+   3.6836858468695726`*^9, 3.683685922966953*^9}, {3.6836860317755537`*^9, 
+   3.6836861459830484`*^9}, {3.683686178908416*^9, 3.683686259541978*^9}, {
+   3.683686296624013*^9, 3.6836863138602266`*^9}, {3.6836863646938143`*^9, 
+   3.6836865047242403`*^9}, {3.683686560808384*^9, 3.6836866398460026`*^9}, {
+   3.6836866773812337`*^9, 3.6836866816160574`*^9}, {3.6836867198076835`*^9, 
+   3.6836867222922544`*^9}, {3.683686905132681*^9, 3.683686906619636*^9}, {
+   3.6836870193181057`*^9, 3.6836871741825347`*^9}, {3.683687212022868*^9, 
+   3.683687429162963*^9}, {3.6836874681221576`*^9, 3.683687505063612*^9}, {
+   3.6836875702051916`*^9, 3.6836876403376074`*^9}, {3.6836877580521564`*^9, 
+   3.6836877989809504`*^9}, {3.683687845936925*^9, 3.6836879046767282`*^9}, {
+   3.6836879504303555`*^9, 3.6836879861990476`*^9}, {3.683688018827464*^9, 
+   3.683688019483793*^9}, {3.683688055690728*^9, 3.683688134136586*^9}, 
+   3.6836881976433764`*^9, {3.683688249008136*^9, 3.683688368104759*^9}, {
+   3.683688412672457*^9, 3.683688491547014*^9}, {3.683688540676178*^9, 
+   3.683688715867749*^9}, {3.683688760296837*^9, 3.683688761492036*^9}, {
+   3.683688810533128*^9, 3.6836888543607016`*^9}, {3.6836890083764677`*^9, 
+   3.683689015767877*^9}, {3.6836890596006947`*^9, 3.6836890677108955`*^9}, {
+   3.683689192251418*^9, 3.6836892278802056`*^9}, {3.683690540360634*^9, 
+   3.6836906220567913`*^9}, {3.6836906593901625`*^9, 
+   3.6836906923137107`*^9}, {3.683690777026768*^9, 3.683690779670835*^9}, {
+   3.683690855156189*^9, 3.6836908870189476`*^9}, {3.6836963935097885`*^9, 
+   3.6836966101734605`*^9}, {3.6836966575895386`*^9, 3.683696717466725*^9}, {
+   3.6836967855327*^9, 3.6836967893548627`*^9}, {3.683696867935813*^9, 
+   3.68369707745566*^9}, {3.6836972164235225`*^9, 3.6836972750235877`*^9}, {
+   3.683697314542527*^9, 3.6836973321225166`*^9}, {3.6836973913944573`*^9, 
+   3.6836975428115015`*^9}, {3.6836975755493526`*^9, 3.683697590207159*^9}, 
+   3.683697646056842*^9, {3.683697958480652*^9, 3.683697998919426*^9}, {
+   3.6836980442047496`*^9, 3.683698065011029*^9}, {3.6836981118618507`*^9, 
+   3.683698161518849*^9}, {3.683698239757448*^9, 3.6836982549378157`*^9}, {
+   3.6836982859954004`*^9, 3.6836983355178537`*^9}, {3.68369837714728*^9, 
+   3.683698551772485*^9}, {3.683698617333056*^9, 3.683698716015418*^9}, {
+   3.6836987795691004`*^9, 3.683698779803446*^9}, {3.6836988494515495`*^9, 
+   3.683698907285762*^9}, {3.6836993833831797`*^9, 3.6836994222310457`*^9}, {
+   3.6836994787449465`*^9, 3.6836997643352003`*^9}, {3.6836998442231455`*^9, 
+   3.6836999120729265`*^9}, {3.683699960713869*^9, 3.683699987224394*^9}, {
+   3.68370010915592*^9, 3.683700139408366*^9}, {3.6837001729615884`*^9, 
+   3.6837001758152113`*^9}, {3.683700619084535*^9, 3.6837006212722673`*^9}, {
+   3.6837048540446224`*^9, 3.6837056926246576`*^9}, {3.6837057439849944`*^9, 
+   3.6837057949858255`*^9}, {3.683705882339148*^9, 3.6837059093039827`*^9}, {
+   3.683705968680318*^9, 3.683706016593009*^9}, {3.6837060548105583`*^9, 
+   3.6837060776481104`*^9}, {3.683706112895914*^9, 3.683706168088068*^9}, {
+   3.6837063387458496`*^9, 3.6837063529385247`*^9}, {3.6837063838657503`*^9, 
+   3.683706480168932*^9}, {3.683706603945854*^9, 3.683706713264392*^9}, {
+   3.683706743355951*^9, 3.683706758527743*^9}, {3.683706928340108*^9, 
+   3.6837069478139133`*^9}, {3.6837070438821526`*^9, 
+   3.6837070537027473`*^9}, {3.68370709695761*^9, 3.683707163038947*^9}, {
+   3.683707206534767*^9, 3.6837072069097414`*^9}, {3.6837072512305937`*^9, 
+   3.683707252621705*^9}, {3.6837072933931956`*^9, 3.683707354445401*^9}, {
+   3.683707960710477*^9, 3.683707988949603*^9}, {3.6837080298935747`*^9, 
+   3.68370811878998*^9}, {3.68370815165471*^9, 3.6837085669860816`*^9}, {
+   3.683708706252267*^9, 3.683708838510729*^9}, {3.683708890783746*^9, 
+   3.6837088986810503`*^9}, {3.6837090014316416`*^9, 
+   3.6837090045604086`*^9}, {3.6837090403421555`*^9, 3.683709056168003*^9}, {
+   3.6837092549569473`*^9, 3.683709296546445*^9}, {3.6837093632311296`*^9, 
+   3.6837094244703803`*^9}, {3.683709472039957*^9, 3.6837095277097816`*^9}, {
+   3.683709626797594*^9, 3.6837096274228654`*^9}, {3.683709681750001*^9, 
+   3.683709687294709*^9}, {3.683709725134683*^9, 3.683709780712226*^9}, {
+   3.683709836657858*^9, 3.6837099221102076`*^9}, {3.683709981299694*^9, 
+   3.683709995662717*^9}, {3.6837100543918257`*^9, 3.6837101144480114`*^9}, {
+   3.68371015209034*^9, 3.683710197191422*^9}, 3.683710268400255*^9, {
+   3.683710541917199*^9, 3.6837106249568205`*^9}, {3.6837106636810102`*^9, 
+   3.6837106808135557`*^9}, {3.6837136928542633`*^9, 3.683713693225214*^9}, {
+   3.683713742683761*^9, 3.6837137503511505`*^9}, {3.683714904312707*^9, 
+   3.683715056012949*^9}, {3.6837153596334877`*^9, 3.6837154295423775`*^9}, {
+   3.683715471733531*^9, 3.683715581929761*^9}, {3.6837157507173896`*^9, 
+   3.6837157673375397`*^9}, {3.6837158255342937`*^9, 
+   3.6837158293895884`*^9}, {3.68371592337451*^9, 3.683715923847748*^9}, {
+   3.6837159637267647`*^9, 3.683715981676524*^9}, {3.6837167799199934`*^9, 
+   3.683716785710353*^9}, {3.683753659403655*^9, 3.683753679827655*^9}}],
+
+Cell[BoxData[
+ PanelBox[
+  DynamicModuleBox[{$CellContext`x$$ = $CellContext`t^2, $CellContext`m$$ = 
+   1, $CellContext`xInit$$ = 0, $CellContext`vInit$$ = 
+   0, $CellContext`vInput$$ = 2 $CellContext`t, $CellContext`aInput$$ = 
+   2, $CellContext`editingEquation$$ = 0, $CellContext`tmin$$ = 
+   0, $CellContext`tmax$$ = 10}, 
+   TagBox[GridBox[{
+      {
+       TemplateBox[{DynamicBox[
+          ToBoxes[
+           Column[{
+             Row[{"m(t) = ", 
+               InputField[
+                Dynamic[$CellContext`m$$]], "[kg]"}], 
+             Row[{"\!\(\*SubscriptBox[\(t\), \(min\)]\) = ", 
+               InputField[
+                Dynamic[$CellContext`tmin$$], Number], "[s]"}], 
+             Row[{"\!\(\*SubscriptBox[\(t\), \(max\)]\) = ", 
+               InputField[
+                Dynamic[$CellContext`tmax$$], Number], "[s]"}]}, Alignment -> 
+            "="], StandardForm]],InterpretationBox[
+          StyleBox[
+           
+           GraphicsBox[{}, ImageSize -> {25, 0}, BaselinePosition -> 
+            Baseline], "CacheGraphics" -> False], 
+          Spacer[25]],DynamicBox[
+          ToBoxes[
+           Column[{$CellContext`set = If[$CellContext`editingEquation$$ == 0, {
+                 Row[{"x(t) = ", 
+                   InputField[
+                    Dynamic[$CellContext`x$$]], "[m]"}]}, 
+                If[$CellContext`editingEquation$$ == 1, {
+                  Row[{"v(t) = ", 
+                    InputField[
+                    Dynamic[$CellContext`vInput$$]], 
+                    "[m \!\(\*SuperscriptBox[\(s\), \(-1\)]\)]"}], 
+                  Row[{"x(0) = ", 
+                    InputField[
+                    Dynamic[$CellContext`xInit$$]], "[m]"}]}, 
+                 If[$CellContext`editingEquation$$ == 2, {
+                   Row[{"a(t) = ", 
+                    InputField[
+                    Dynamic[$CellContext`aInput$$]], 
+                    "[m \!\(\*SuperscriptBox[\(s\), \(-2\)]\)]"}], 
+                   Row[{"v(0) = ", 
+                    InputField[
+                    Dynamic[$CellContext`vInit$$]], 
+                    "[m \!\(\*SuperscriptBox[\(s\), \(-1\)]\)]"}], 
+                   Row[{"x(0) = ", 
+                    InputField[
+                    Dynamic[$CellContext`xInit$$]], "[m]"}]}, 
+                  "There was a problem :/"]]]; 
+             If[Length[$CellContext`set] >= 1, 
+               Extract[$CellContext`set, 1], 
+               Invisible[
+                Row[{"f(x) = ", 
+                  InputField[]}]]], 
+             If[Length[$CellContext`set] >= 2, 
+              Extract[$CellContext`set, 2], 
+              Invisible[
+               Row[{"f(x) = ", 
+                 InputField[]}]]], 
+             If[Length[$CellContext`set] >= 3, 
+              Extract[$CellContext`set, 3], 
+              Invisible[
+               Row[{"f(x) = ", 
+                 InputField[]}]]]}, Alignment -> "="], StandardForm], 
+          ImageSizeCache -> {306., {32., 39.}}],""},
+        "RowDefault"]},
+      {
+       TemplateBox[{
+        ButtonBox[
+         "\"x(t)\"", 
+          ButtonFunction :> {
+           If[$CellContext`editingEquation$$ == 2, $CellContext`x$$ = 
+              Integrate[
+                Integrate[$CellContext`aInput$$, $CellContext`t] + \
+$CellContext`vInit$$, $CellContext`t] + $CellContext`xInit$$, 
+              
+              If[$CellContext`editingEquation$$ == 1, $CellContext`x$$ = 
+               Integrate[$CellContext`vInput$$, $CellContext`t] + \
+$CellContext`xInit$$, 
+               Blank[]]]; $CellContext`editingEquation$$ = 0}, Appearance -> 
+          Automatic, Evaluator -> Automatic, Method -> "Preemptive"],
+         ButtonBox[
+         "\"v(t)\"", 
+          ButtonFunction :> {
+           If[$CellContext`editingEquation$$ == 
+              2, {$CellContext`vInput$$ = 
+                Integrate[$CellContext`aInput$$, $CellContext`t] + \
+$CellContext`vInit$$; $CellContext`x$$ = 
+                Integrate[$CellContext`vInput$$, $CellContext`t] + \
+$CellContext`xInit$$}, 
+              
+              If[$CellContext`editingEquation$$ == 0, $CellContext`vInput$$ = 
+               D[$CellContext`x$$, $CellContext`t] + $CellContext`vInit$$, 
+               Blank[]]]; $CellContext`editingEquation$$ = 1}, Appearance -> 
+          Automatic, Evaluator -> Automatic, Method -> "Preemptive"],
+         ButtonBox[
+         "\"a(t)\"", 
+          ButtonFunction :> {
+           If[$CellContext`editingEquation$$ == 0, $CellContext`aInput$$ = 
+              D[$CellContext`x$$, {$CellContext`t, 2}], 
+              
+              If[$CellContext`editingEquation$$ == 1, $CellContext`aInput$$ = 
+               D[$CellContext`vInput$$, $CellContext`t], 
+               Blank[]]]; $CellContext`editingEquation$$ = 2}, Appearance -> 
+          Automatic, Evaluator -> Automatic, Method -> "Preemptive"],
+         ButtonBox[
+         "\"Set\"", 
+          ButtonFunction :> {
+           If[$CellContext`editingEquation$$ == 2, $CellContext`x$$ = 
+              Integrate[
+                Integrate[$CellContext`aInput$$, $CellContext`t] + \
+$CellContext`vInit$$, $CellContext`t] + $CellContext`xInit$$, 
+              
+              If[$CellContext`editingEquation$$ == 1, $CellContext`x$$ = 
+               Integrate[$CellContext`vInput$$, $CellContext`t] + \
+$CellContext`xInit$$, 
+               Blank[]]]; Null}, Appearance -> Automatic, Evaluator -> 
+          Automatic, Method -> "Preemptive"]},
+        "RowDefault"]},
+      {
+       DynamicBox[ToBoxes[
+         Grid[
+          MapIndexed[{
+            Extract[#, 1], 
+            Spacer[20], 
+            Row[{
+              Grid[{
+                MapIndexed[Column[{
+                   Dynamic[
+                    StringForm["`1`(t)=`2`", 
+                    Extract[#, 2], 
+                    Expand[
+                    Simplify[
+                    Extract[#, 1]]]]], 
+                   Dynamic[
+                    Plot[
+                    
+                    Extract[#, 
+                    1], {$CellContext`t, $CellContext`tmin$$, \
+$CellContext`tmax$$}, Frame -> True, FrameLabel -> {"Time", 
+                    Extract[#, 3]}, RotateLabel -> True, ImageSize -> 
+                    Medium]], 
+                   Spacer[5]}, Alignment -> Right]& , 
+                 Rest[#]]}]}], 
+            Spacer[
+            2]}& , {$CellContext`v := 
+             D[$CellContext`x$$, $CellContext`t]; $CellContext`a := 
+             D[$CellContext`v, $CellContext`t]; $CellContext`p := \
+$CellContext`m$$ $CellContext`v; $CellContext`F := 
+             D[$CellContext`p, $CellContext`t]; $CellContext`Ke := ((1/
+                2) $CellContext`m$$) $CellContext`v^2; $CellContext`P := \
+$CellContext`F $CellContext`v; {
+             "Kinematics", {$CellContext`x$$, 
+               "\!\(\*OverscriptBox[\(x\), \(\[RightVector]\)]\)", 
+               "Position [m]"}, {$CellContext`v, 
+               "\!\(\*OverscriptBox[\(v\), \(\[RightVector]\)]\)", 
+               "Velocity [m \!\(\*SuperscriptBox[\(s\), \(-1\)]\)]"}, \
+{$CellContext`a, "\!\(\*OverscriptBox[\(a\), \(\[RightVector]\)]\)", 
+               "Acceleration [m \!\(\*SuperscriptBox[\(s\), \(-2\)]\)]"}}, {
+            "Mass", {$CellContext`m$$, "m", "Mass [kg]"}, {$CellContext`p, 
+              "\!\(\*OverscriptBox[\(p\), \(\[RightVector]\)]\)", 
+              "Momentum [kg m \!\(\*SuperscriptBox[\(s\), \(-1\)]\)]"}, \
+{$CellContext`F, "\!\(\*OverscriptBox[\(F\), \(\[RightVector]\)]\)", 
+              "Force [N]"}}, {
+            "Energy", {$CellContext`Ke, "\!\(\*SubscriptBox[\(E\), \(K\)]\)", 
+              "Kinetic [J]"}, {$CellContext`P, "P", "Power [W]"}}}], 
+          Alignment -> Left], StandardForm],
+        ImageSizeCache->{919., {329., 336.}}]}
+     },
+     DefaultBaseStyle->"Column",
+     GridBoxAlignment->{"Columns" -> {{Left}}},
+     GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+    "Column"],
+   DynamicModuleValues:>{}]]], "Output",
+ CellChangeTimes->{3.6837167878400135`*^9, 3.6837536814840517`*^9}]
+}, Open  ]]
+},
+WindowSize->{1536, 791},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+Magnification->0.75,
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 29207, 559, 4005, "Input"],
+Cell[29790, 583, 8021, 178, 803, "Output"]
+}, Open  ]]
+}
+]
+*)
+

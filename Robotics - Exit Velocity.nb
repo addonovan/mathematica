@@ -1,0 +1,300 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     11122,        292]
+NotebookOptionsPosition[     10803,        276]
+NotebookOutlinePosition[     11147,        291]
+CellTagsIndexPosition[     11104,        288]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Symbolize", "[", 
+   RowBox[{"ParsedBoxWrapper", "[", 
+    RowBox[{"SubscriptBox", "[", 
+     RowBox[{"\"\<_\>\"", ",", "\"\<_\>\""}], "]"}], "]"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Attributes", "[", "makeInputRow", "]"}], "=", 
+   RowBox[{"{", "HoldAll", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Attributes", "[", "makeOutputRow", "]"}], "=", 
+    RowBox[{"{", "HoldAll", "}"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Creates", " ", "a", " ", "input", " ", "field", " ", "with", " ", "a", 
+    " ", "description"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"makeInputRow", "[", 
+   RowBox[{"desc_", ",", " ", "var_", ",", " ", "units_"}], "]"}], ":=", 
+  "\[IndentingNewLine]", 
+  RowBox[{"Row", "@", 
+   RowBox[{"{", 
+    RowBox[{"desc", ",", " ", 
+     RowBox[{"InputField", "[", 
+      RowBox[{"Dynamic", "[", "var", "]"}], "]"}], ",", "units"}], 
+    "}"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"makeOutputRow", "[", 
+    RowBox[{"format_", ",", "var_"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"Row", "@", 
+    RowBox[{"{", 
+     RowBox[{"Dynamic", "[", 
+      RowBox[{"StringForm", "[", 
+       RowBox[{"format", ",", "var"}], "]"}], "]"}], "}"}]}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"toM", "[", "in_", "]"}], ":=", " ", 
+   RowBox[{"in", " ", "*", " ", "0.0254"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"findMaxRoot", "[", 
+     RowBox[{"a_", ",", "b_", ",", "c_"}], "]"}], ":=", 
+    RowBox[{"N", "[", 
+     FractionBox[
+      RowBox[{
+       RowBox[{"-", "b"}], "+", 
+       RowBox[{"\[Sqrt]", 
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["b", "2"], "-", 
+          RowBox[{"4", 
+           RowBox[{"(", 
+            RowBox[{"a", " ", "*", " ", "c"}], ")"}]}]}], ")"}]}]}], 
+      RowBox[{"2", "a"}]], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Our", " ", "constants"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   SubscriptBox["y", "goal"], ":=", "48"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"g", ":=", "386.1"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Panel", "[", "\[IndentingNewLine]", 
+  RowBox[{"DynamicModule", "[", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Dynamic", " ", "variables", " ", "go", " ", "here"}], " ", 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["y", "init"], "=", "15"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       SubscriptBox["y", "max"], "=", "60"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"\[CapitalDelta]x", " ", "=", " ", "24"}]}], 
+     "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{"the", " ", "UI"}], " ", "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"Column", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"The", " ", "input", " ", "fields"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Column", "[", 
+         RowBox[{
+          RowBox[{"{", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"makeInputRow", "[", 
+             RowBox[{"\"\<\!\(\*SubscriptBox[\(y\), \(init\)]\) = \>\"", ",", 
+              SubscriptBox["y", "init"], ",", "\"\<[in]\>\""}], "]"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"makeInputRow", "[", 
+             RowBox[{"\"\<\!\(\*SubscriptBox[\(y\), \(max\)]\) = \>\"", ",", 
+              SubscriptBox["y", "max"], ",", "\"\<[in]\>\""}], "]"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"makeInputRow", "[", 
+             RowBox[{
+             "\"\<\[CapitalDelta]x = \>\"", ",", "\[CapitalDelta]x", ",", 
+              "\"\<[in]\>\""}], "]"}], ","}], "\[IndentingNewLine]", "}"}], 
+          ",", 
+          RowBox[{"Alignment", " ", "\[Rule]", " ", "\"\<=\>\""}]}], 
+         "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", 
+        RowBox[{"Column", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", "\[IndentingNewLine]", 
+             RowBox[{"(*", 
+              RowBox[{"Formulas", " ", "and", " ", "calulcations"}], "*)"}], 
+             "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"makeOutputRow", "[", 
+               RowBox[{
+               "\"\<\!\(\*SubscriptBox[\(v\), \(y\)]\) = `` [m \
+\!\(\*SuperscriptBox[\(s\), \(-1\)]\)]\>\"", ",", " ", 
+                RowBox[{"NumberForm", "[", 
+                 RowBox[{
+                  SubscriptBox["v", "y"], ",", "3"}], "]"}]}], "]"}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{"makeOutputRow", "[", 
+               RowBox[{"\"\<t = `` [s]\>\"", ",", 
+                RowBox[{"NumberForm", "[", 
+                 RowBox[{"t", ",", "3"}], "]"}]}], "]"}]}], 
+             "\[IndentingNewLine]", "}"}], "&"}], 
+           RowBox[{"{", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               SubscriptBox["v", "y"], ":=", 
+               RowBox[{"\[Sqrt]", 
+                RowBox[{"(", 
+                 RowBox[{"2", " ", "*", " ", "g", "*", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    SubscriptBox["y", "max"], "-", 
+                    SubscriptBox["y", "init"]}], ")"}]}], ")"}]}]}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"t", ":=", 
+               RowBox[{"N", "[", 
+                RowBox[{"findMaxRoot", "[", 
+                 RowBox[{
+                  RowBox[{
+                   FractionBox["1", "2"], "g"}], ",", 
+                  RowBox[{"-", 
+                   SubscriptBox["v", "y"]}], ",", 
+                  RowBox[{
+                   SubscriptBox["y", "goal"], "-", 
+                   SubscriptBox["y", "init"]}]}], "]"}], "]"}]}], ";", 
+              "\[IndentingNewLine]", 
+              RowBox[{"{", 
+               RowBox[{"\"\<\!\(\*SubscriptBox[\(v\), \(y\)]\)\>\"", ",", 
+                SubscriptBox["v", "y"]}], "}"}]}], ",", "\[IndentingNewLine]", 
+             RowBox[{"{", 
+              RowBox[{"\"\<t\>\"", ",", "t"}], "}"}]}], "\[IndentingNewLine]",
+             "}"}], "\[IndentingNewLine]", "Alignment"}], " ", "\[Rule]", 
+          " ", "\"\<=\>\""}], "]"}]}], "\[IndentingNewLine]", "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Alignment", "\[Rule]", "\"\<=\>\""}]}], "\[IndentingNewLine]", 
+     "]"}]}], "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+  "]"}]}], "Input",
+ CellChangeTimes->{{3.6864447313866777`*^9, 3.686444886052886*^9}, {
+  3.686444981409794*^9, 3.6864449969381614`*^9}, {3.686445052402484*^9, 
+  3.686445337128718*^9}, {3.68644542119524*^9, 3.686445558757594*^9}, {
+  3.6864456244497766`*^9, 3.6864456611100793`*^9}, {3.6864457297414484`*^9, 
+  3.6864459949291735`*^9}, {3.6864460634954967`*^9, 3.68644617579444*^9}, {
+  3.6864462837440696`*^9, 3.686446288650776*^9}, {3.6864463231605086`*^9, 
+  3.6864463473193913`*^9}, {3.6864464592887526`*^9, 3.686446560167026*^9}, {
+  3.6864467374683685`*^9, 3.686446740565612*^9}, {3.68644683094886*^9, 
+  3.686447242367631*^9}, {3.6864472937482224`*^9, 3.686447362320434*^9}, {
+  3.686447455383159*^9, 3.6864476218539963`*^9}, {3.6864476763541813`*^9, 
+  3.686447683517247*^9}, {3.6864477252733974`*^9, 3.686447772442135*^9}, {
+  3.6864478125090456`*^9, 3.68644781747832*^9}, {3.686448003202574*^9, 
+  3.6864482363833065`*^9}}],
+
+Cell[BoxData[
+ PanelBox[
+  DynamicModuleBox[{$CellContext`y\[UnderBracket]Subscript\[UnderBracket]init$\
+$ = 15, $CellContext`y\[UnderBracket]Subscript\[UnderBracket]max$$ = 
+   60, $CellContext`\[CapitalDelta]x$$ = 24}, 
+   TagBox[GridBox[{
+      {
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            "\"\\!\\(\\*SubscriptBox[\\(y\\), \\(init\\)]\\) = \"",
+             InputFieldBox[
+              
+              Dynamic[$CellContext`y\[UnderBracket]Subscript\[UnderBracket]\
+init$$]],"\"[in]\""},
+            "RowDefault"]},
+          {
+           
+           TemplateBox[{
+            "\"\\!\\(\\*SubscriptBox[\\(y\\), \\(max\\)]\\) = \"",
+             InputFieldBox[
+              
+              Dynamic[$CellContext`y\[UnderBracket]Subscript\[UnderBracket]\
+max$$]],"\"[in]\""},
+            "RowDefault"]},
+          {
+           TemplateBox[{"\"\[CapitalDelta]x = \"",InputFieldBox[
+              Dynamic[$CellContext`\[CapitalDelta]x$$]],"\"[in]\""},
+            "RowDefault"]},
+          {""}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"]},
+      {
+       RowBox[{"Column", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"Alignment", " ", "Null", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"makeOutputRow", "[", 
+                
+                RowBox[{"\<\"\\!\\(\\*SubscriptBox[\\(v\\), \\(y\\)]\\) = `` \
+[m \\!\\(\\*SuperscriptBox[\\(s\\), \\(-1\\)]\\)]\"\>", ",", 
+                 TagBox[
+                  SubscriptBox["v", "y"],
+                  NumberForm[#, 3]& ]}], "]"}], ",", 
+               RowBox[{"makeOutputRow", "[", 
+                RowBox[{"\<\"t = `` [s]\"\>", ",", 
+                 TagBox["t",
+                  NumberForm[#, 3]& ]}], "]"}]}], "}"}], "&"}], ")"}]}], 
+          "}"}], "\[Rule]", "\<\"=\"\>"}], "]"}]}
+     },
+     DefaultBaseStyle->"Column",
+     GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+     GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+    "Column"],
+   DynamicModuleValues:>{}]]], "Output",
+ CellChangeTimes->{3.6864482037023287`*^9}]
+}, Open  ]]
+},
+WindowSize->{1536, 791},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 7852, 185, 1640, "Input"],
+Cell[8435, 209, 2352, 64, 183, "Output"]
+}, Open  ]]
+}
+]
+*)
+

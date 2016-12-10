@@ -1,0 +1,1947 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     81035,       1939]
+NotebookOptionsPosition[     80526,       1919]
+NotebookOutlinePosition[     80870,       1934]
+CellTagsIndexPosition[     80827,       1931]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+  "Import", "[", 
+   "\"\<C:\\\\Users\\\\austin\\\\Documents\\\\Wolfram \
+Mathematica\\\\PolarAndParametric.wl\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAll", "[", "\[IndentingNewLine]", 
+    RowBox[{
+    "x", ",", "y", ",", "\[IndentingNewLine]", "f", ",", "g", ",", "tValue", 
+     ",", "tmin", ",", "tmax", ",", "\[IndentingNewLine]", "Subtitle", ",", 
+     "\[IndentingNewLine]", "MakeInputRow", ",", "MakeOutputRow", ",", 
+     "\[IndentingNewLine]", "MakeTitleRow", ",", "MakeSubtitleRow", ",", 
+     "\[IndentingNewLine]", "MakeRadioButton", ",", "\[IndentingNewLine]", 
+     "MakeParametricPlot", ",", "MakeCartesianPlot"}], "\[IndentingNewLine]", 
+    "]"}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Makes", " ", "a", " ", "row", " ", "for", " ", "accepting", " ", "input", 
+    " ", "for", " ", "the", " ", "given", " ", "variable"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Attributes", "[", "MakeInputRow", "]"}], "=", 
+   RowBox[{"{", "HoldAll", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MakeInputRow", "[", 
+    RowBox[{"label_", ",", "variable_"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"Row", "@", 
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Style", "[", 
+       RowBox[{"label", ",", "15"}], "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"InputField", "[", 
+       RowBox[{"Dynamic", "[", "variable", "]"}], "]"}]}], 
+     "\[IndentingNewLine]", "}"}]}]}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Makes", " ", "a", " ", "row", " ", "for", " ", "outputing", " ", 
+    "dynamic", " ", "data", " ", "to", " ", "the", " ", "user"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Attributes", "[", "MakeOutputRow", "]"}], "=", 
+   RowBox[{"{", "HoldAll", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MakeOutputRow", "[", 
+    RowBox[{"format_", ",", "values__"}], "]"}], ":=", 
+   RowBox[{"Row", "@", 
+    RowBox[{"{", 
+     RowBox[{"Dynamic", "[", 
+      RowBox[{"Style", "[", 
+       RowBox[{
+        RowBox[{"StringForm", "[", 
+         RowBox[{"format", ",", " ", "values"}], "]"}], ",", "15"}], "]"}], 
+      "]"}], "}"}]}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "forces", " ", "brackets", " ", "to", " ", "expand", " ", "and", " ", 
+    "take", " ", "up", " ", "the", " ", "height", " ", "of", " ", "the", " ", 
+    "entire", " ", "box"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MakeBoxes", "[", 
+    RowBox[{
+     RowBox[{"brace", "[", "obj_", "]"}], ",", "fmt_"}], "]"}], ":=", 
+   RowBox[{"StyleBox", "[", 
+    RowBox[{
+     RowBox[{"RowBox", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<{\>\"", ",", 
+        RowBox[{"obj", "~", "ToBoxes", "~", "fmt"}]}], "}"}], "]"}], ",", 
+     RowBox[{"SpanMaxSize", "\[Rule]", "Infinity"}]}], "]"}]}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "forces", " ", "integral", " ", "signs", " ", "to", " ", "expand", " ", 
+    "and", " ", "take", " ", "up", " ", "the", " ", "height", " ", "of", " ", 
+    "the", " ", "entire", " ", "box"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"MakeBoxes", "[", 
+    RowBox[{
+     RowBox[{"int", "[", "obj_", "]"}], ",", "fmt_"}], "]"}], ":=", 
+   RowBox[{"StyleBox", "[", 
+    RowBox[{
+     RowBox[{"RowBox", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<\[Integral]\>\"", ",", 
+        RowBox[{"obj", "~", "ToBoxes", "~", "fmt"}]}], "}"}], "]"}], ",", 
+     RowBox[{"SpanMaxSize", "\[Rule]", "Infinity"}]}], "]"}]}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Makes", " ", "a", " ", "label", " ", "formatted", " ", "as", " ", "a", 
+    " ", "title"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MakeTitleRow", "[", "label_", "]"}], ":=", 
+    RowBox[{"Row", "@", 
+     RowBox[{"{", 
+      RowBox[{"Style", "[", 
+       RowBox[{"label", ",", "Bold", ",", "20"}], "]"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Formats", " ", "the", " ", "text", " ", "as", " ", "a", " ", "subtitle"}],
+    " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Subtitle", "[", "label_", "]"}], ":=", 
+    RowBox[{"Style", "[", 
+     RowBox[{"label", ",", "Italic", ",", "16"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Makes", " ", "a", " ", "label", " ", "formatted", " ", "as", " ", "a", 
+    " ", "subtitle"}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MakeSubtitleRow", "[", "label_", "]"}], ":=", 
+    RowBox[{"Row", "@", 
+     RowBox[{"{", 
+      RowBox[{"Subtitle", "[", "label", "]"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Makes", " ", "a", " ", "row", " ", "for", " ", "a", " ", "radio", " ", 
+    "button", " ", "with", " ", "the", " ", "given", " ", "label"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Attributes", "[", "MakeRadioButton", "]"}], "=", 
+   RowBox[{"{", "HoldAll", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MakeRadioButton", "[", 
+     RowBox[{"label_", ",", "variable_", ",", "value_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Row", "@", 
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"RadioButton", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Dynamic", "[", "variable", "]"}], ",", 
+         "\[IndentingNewLine]", "value"}], "\[IndentingNewLine]", "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Spacer", "[", 
+        RowBox[{"{", 
+         RowBox[{"5", ",", "1"}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+       "label"}], "\[IndentingNewLine]", "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Makes", " ", "a", " ", "parametric", " ", "plot"}], ",", " ", 
+    RowBox[{
+    "where", " ", "there", " ", "is", " ", "a", " ", "single", " ", "line"}], 
+    ",", " ", 
+    RowBox[{"represented", " ", "as", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"f", "[", "x", "]"}], ",", 
+       RowBox[{"g", "[", "x", "]"}]}], ")"}]}]}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MakeParametricPlot", "[", 
+     RowBox[{"f_", ",", "g_", ",", "tmin_", ",", "tmax_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Row", "@", 
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{"Dynamic", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"ParametricPlot", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"f", ",", "g"}], "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", "tmin", ",", "tmax"}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"ImageSize", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"500", ",", "500"}], "}"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"BaseStyle", "\[Rule]", 
+           RowBox[{"Arrowheads", "[", "\[IndentingNewLine]", 
+            RowBox[{"Table", "[", 
+             RowBox[{"Large", ",", "10"}], "]"}], "\[IndentingNewLine]", 
+            "]"}]}]}], "\[IndentingNewLine]", "]"}], "/.", 
+        RowBox[{"Line", "\[Rule]", "Arrow"}]}], "\[IndentingNewLine]", "]"}], 
+      "\[IndentingNewLine]", "}"}]}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"Makes", " ", "the", " ", "cartesian", " ", "plot", " ", 
+    RowBox[{"(", 
+     RowBox[{"where", " ", "y", 
+      RowBox[{"(", "t", ")"}], " ", "and", " ", "x", 
+      RowBox[{"(", "t", ")"}], " ", "are", " ", "graphed", " ", "against", 
+      " ", "t"}], " "}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MakeCartesianPlot", "[", 
+     RowBox[{"f_", ",", "g_", ",", "tmin_", ",", "tmax_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Row", "@", 
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{"Dynamic", "[", "\[IndentingNewLine]", 
+       RowBox[{"Plot", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"f", ",", "g"}], "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"{", 
+          RowBox[{"t", ",", "tmin", ",", "tmax"}], "}"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"ImageSize", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"500", ",", "500"}], "}"}]}]}], "\[IndentingNewLine]", 
+        "]"}], "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", "}"}]}]}],
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Make", " ", "our", " ", "panel", " ", "and", " ", "interactive", " ", 
+    RowBox[{"stuffs", "!"}]}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Panel", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"DynamicModule", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"f", "=", "t"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"g", "=", "t"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"tmin", "=", 
+        RowBox[{"-", "10"}]}], ",", "\[IndentingNewLine]", 
+       RowBox[{"tmax", "=", "10"}], ",", "\[IndentingNewLine]", "tValue", ",",
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"plotType", "=", "0"}]}], " ", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+        RowBox[{"0", " ", "for", " ", "y", 
+         RowBox[{"(", "t", ")"}], " ", "vs", " ", "x", 
+         RowBox[{"(", "t", ")"}]}], ",", " ", 
+        RowBox[{"1", " ", "for", " ", "x", 
+         RowBox[{"(", "t", ")"}]}], ",", 
+        RowBox[{"y", 
+         RowBox[{"(", "t", ")"}], " ", "vs", " ", "t"}]}], " ", "*)"}], 
+      "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"Grid", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"Column", "@", 
+           RowBox[{"{", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{
+             "MakeTitleRow", "[", "\"\<Parametric Equations\>\"", "]"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{"Column", "[", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"{", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"MakeInputRow", "[", 
+                  RowBox[{"\"\<x(t)=\>\"", ",", "f"}], "]"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"MakeInputRow", "[", 
+                  RowBox[{"\"\<y(t)=\>\"", ",", "g"}], "]"}]}], 
+                "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+               RowBox[{"Alignment", "\[Rule]", "\"\<=\>\""}]}], 
+              "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+             RowBox[{"Spacer", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "20"}], "}"}], "]"}], ",", 
+             "\[IndentingNewLine]", "\[IndentingNewLine]", 
+             RowBox[{
+             "MakeTitleRow", "[", "\"\<Equation Information\>\"", "]"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{"Grid", "[", "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"{", "\[IndentingNewLine]", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"\"\<Arc Length\>\"", ",", "\"\<=\>\"", ",", 
+                   RowBox[{"Dynamic", "@", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"StringForm", "[", 
+                    RowBox[{"\"\<``\[DifferentialD]t\>\"", ",", 
+                    RowBox[{"Simplify", "[", 
+                    RowBox[{"\[Sqrt]", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    SuperscriptBox[
+                    RowBox[{"D", "[", 
+                    RowBox[{"f", ",", "t"}], "]"}], "2"], "+", 
+                    SuperscriptBox[
+                    RowBox[{"D", "[", 
+                    RowBox[{"g", ",", "t"}], "]"}], "2"]}], ")"}]}], "]"}]}], 
+                    "]"}], "//", "int"}], ")"}]}]}], "}"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"{", 
+                  RowBox[{
+                  "\"\<\!\(\*FractionBox[\(\[DifferentialD]y\), \(\
+\[DifferentialD]x\)]\)\>\"", ",", "\"\<=\>\"", ",", 
+                   RowBox[{"Dynamic", "@", 
+                    RowBox[{"ParametricD", "[", 
+                    RowBox[{"f", ",", "g"}], "]"}]}]}], "}"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"{", 
+                  RowBox[{
+                  "\"\<\!\(\*FractionBox[\(\*SuperscriptBox[\(\[DifferentialD]\
+\), \(2\)]y\), \(\[DifferentialD]\*SuperscriptBox[\(x\), \(2\)]\)]\)\>\"", 
+                   ",", "\"\<=\>\"", ",", 
+                   RowBox[{"Dynamic", "@", 
+                    RowBox[{"ParametricD", "[", 
+                    RowBox[{"f", ",", "g", ",", "2"}], "]"}]}]}], "}"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"{", "\[IndentingNewLine]", 
+                  RowBox[{
+                  "\"\<y(x)\>\"", ",", "\"\<=\>\"", ",", 
+                   "\[IndentingNewLine]", 
+                   RowBox[{"Dynamic", "[", "\[IndentingNewLine]", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Flatten", "@", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"FullSimplify", "[", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"#", "/.", 
+                    RowBox[{"Rule", "\[Rule]", "List"}]}], ")"}], "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "]"}], "&"}], "/@", 
+                    RowBox[{"Flatten", "@", "#"}]}], "&"}], "/@", 
+                    RowBox[{"Solve", "[", 
+                    RowBox[{
+                    RowBox[{"Quiet", "@", 
+                    RowBox[{"Eliminate", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"x", "\[Equal]", "f"}], ",", 
+                    RowBox[{"y", "\[Equal]", "g"}]}], "}"}], ",", "t"}], 
+                    "]"}]}], ",", "y"}], "]"}]}], ")"}]}], 
+                    "\[IndentingNewLine]", "//", "Column"}], " ", "//", 
+                    "brace"}], "\[IndentingNewLine]", "]"}]}], 
+                  "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", 
+                "}"}], ",", "\[IndentingNewLine]", 
+               RowBox[{"Alignment", "\[Rule]", 
+                RowBox[{"{", 
+                 RowBox[{"{", 
+                  RowBox[{"Right", ",", "Center", ",", "Left"}], "}"}], 
+                 "}"}]}], ",", "\[IndentingNewLine]", 
+               RowBox[{"ItemStyle", "\[Rule]", 
+                RowBox[{"Directive", "[", 
+                 RowBox[{"FontSize", "\[Rule]", "15"}], "]"}]}]}], 
+              "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+             RowBox[{"Spacer", "[", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "20"}], "}"}], "]"}], ",", 
+             "\[IndentingNewLine]", "\[IndentingNewLine]", 
+             RowBox[{"MakeTitleRow", "[", "\"\<Plotting\>\"", "]"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{"Column", "@", 
+              RowBox[{"{", "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"Column", "[", "\[IndentingNewLine]", 
+                 RowBox[{
+                  RowBox[{"{", "\[IndentingNewLine]", 
+                   RowBox[{
+                    RowBox[{"MakeInputRow", "[", 
+                    RowBox[{
+                    "\"\<\!\(\*SubscriptBox[\(t\), \(min\)]\)=\>\"", ",", 
+                    "tmin"}], "]"}], ",", "\[IndentingNewLine]", 
+                    RowBox[{"MakeInputRow", "[", 
+                    RowBox[{
+                    "\"\<\!\(\*SubscriptBox[\(t\), \(max\)]\)=\>\"", ",", 
+                    "tmax"}], "]"}]}], "\[IndentingNewLine]", "}"}], ",", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"Alignment", "\[Rule]", "\"\<=\>\""}]}], 
+                 "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+                RowBox[{"Spacer", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", "5"}], "}"}], "]"}], ",", 
+                "\[IndentingNewLine]", "\[IndentingNewLine]", 
+                RowBox[{"Grid", "[", "\[IndentingNewLine]", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{"{", "\[IndentingNewLine]", 
+                    RowBox[{
+                    RowBox[{"Framed", "[", 
+                    RowBox[{"Column", "@", 
+                    RowBox[{"{", "\[IndentingNewLine]", 
+                    RowBox[{
+                    RowBox[{
+                    "MakeSubtitleRow", "[", "\"\<Plot Type\>\"", "]"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"MakeRadioButton", "[", 
+                    RowBox[{"\"\<Parametric\>\"", ",", "plotType", ",", "0"}],
+                     "]"}], ",", "\[IndentingNewLine]", 
+                    RowBox[{"MakeRadioButton", "[", 
+                    RowBox[{"\"\<Cartesian\>\"", ",", "plotType", ",", "1"}], 
+                    "]"}]}], "\[IndentingNewLine]", "}"}]}], "]"}], ",", 
+                    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+                    RowBox[{"Dynamic", "[", 
+                    RowBox[{"If", "[", "\[IndentingNewLine]", 
+                    RowBox[{
+                    RowBox[{"plotType", "\[Equal]", "0"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"MakeParametricPlot", "[", 
+                    RowBox[{"f", ",", "g", ",", "tmin", ",", "tmax"}], "]"}], 
+                    ",", "\[IndentingNewLine]", 
+                    RowBox[{"MakeCartesianPlot", "[", 
+                    RowBox[{"f", ",", "g", ",", "tmin", ",", "tmax"}], 
+                    "]"}]}], "\[IndentingNewLine]", "]"}], "]"}]}], 
+                    "\[IndentingNewLine]", "}"}], "}"}], ",", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"Alignment", "\[Rule]", "Top"}]}], 
+                 "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
+               "}"}]}]}], "\[IndentingNewLine]", "}"}]}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Spacer", "[", 
+           RowBox[{"{", 
+            RowBox[{"50", ",", "1"}], "}"}], "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Column", "@", 
+           RowBox[{"{", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"MakeTitleRow", "[", "\"\<Table\>\"", "]"}], ",", 
+             "\[IndentingNewLine]", 
+             RowBox[{"Dynamic", "[", 
+              RowBox[{"Grid", "[", "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"Prepend", "[", "\[IndentingNewLine]", 
+                 RowBox[{
+                  RowBox[{"Table", "[", "\[IndentingNewLine]", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"t", ",", "f", ",", "g"}], "}"}], ",", 
+                    "\[IndentingNewLine]", 
+                    RowBox[{"{", 
+                    RowBox[{"t", ",", 
+                    RowBox[{"Floor", "[", "tmin", "]"}], ",", 
+                    RowBox[{"Ceiling", "[", "tmax", "]"}]}], "}"}]}], 
+                   "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"Subtitle", "[", "\"\<t\>\"", "]"}], ",", 
+                    RowBox[{"Subtitle", "[", "\"\<x(t)\>\"", "]"}], ",", 
+                    RowBox[{"Subtitle", "[", "\"\<y(t)\>\"", "]"}]}], "}"}]}],
+                  "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+                RowBox[{"ItemSize", "\[Rule]", "10"}], ",", 
+                "\[IndentingNewLine]", 
+                RowBox[{"Dividers", "\[Rule]", "Center"}]}], 
+               "\[IndentingNewLine]", "]"}], "]"}]}], "\[IndentingNewLine]", 
+            "}"}]}]}], "\[IndentingNewLine]", "}"}], "\[IndentingNewLine]", 
+        "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"Alignment", "\[Rule]", "Top"}]}], "\[IndentingNewLine]", 
+      "]"}]}], "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"ImageSize", "\[Rule]", "Full"}]}], "\[IndentingNewLine]", 
+  "]"}]}], "Input",
+ CellChangeTimes->{{3.690051006657063*^9, 3.6900513409388533`*^9}, {
+   3.690051441817299*^9, 3.6900514607042494`*^9}, {3.690051506047866*^9, 
+   3.690051550321455*^9}, {3.6900516755249033`*^9, 3.69005198676455*^9}, {
+   3.6900520170257244`*^9, 3.6900524898065295`*^9}, {3.6900525266277523`*^9, 
+   3.690052564199005*^9}, {3.690052615593381*^9, 3.6900526238380637`*^9}, {
+   3.690052672760933*^9, 3.6900527529707594`*^9}, {3.690052832565938*^9, 
+   3.69005285783648*^9}, {3.69005290844971*^9, 3.690052997359563*^9}, {
+   3.690053143372965*^9, 3.690053162879284*^9}, {3.6900532264041758`*^9, 
+   3.6900532729807076`*^9}, {3.690053411583256*^9, 3.6900534968881702`*^9}, {
+   3.6900535278025265`*^9, 3.6900535828907533`*^9}, {3.690053799408616*^9, 
+   3.69005399076686*^9}, {3.690054119581401*^9, 3.6900541382784047`*^9}, {
+   3.690058050611433*^9, 3.6900580582324357`*^9}, {3.6900581152182426`*^9, 
+   3.69005814074382*^9}, {3.690058699426155*^9, 3.690058700312649*^9}, {
+   3.6902475223605795`*^9, 3.6902476011201997`*^9}, 3.6902477603491077`*^9, {
+   3.690247900083284*^9, 3.6902479044649243`*^9}, {3.690247948409116*^9, 
+   3.6902480352488794`*^9}, {3.6902481126457644`*^9, 
+   3.6902482015369315`*^9}, {3.6902482482251577`*^9, 3.690248277216468*^9}, {
+   3.690248342815606*^9, 3.6902483474570055`*^9}, {3.6902484595047064`*^9, 
+   3.6902484718018303`*^9}, {3.6902485044123726`*^9, 3.690248507024322*^9}, {
+   3.6902491002719193`*^9, 3.6902491055044117`*^9}, {3.690249342135528*^9, 
+   3.69024939746902*^9}, {3.690249429605853*^9, 3.6902494954676056`*^9}, {
+   3.690249545824129*^9, 3.6902498587073045`*^9}, {3.6902498992040925`*^9, 
+   3.690250017736515*^9}, {3.690250101526038*^9, 3.69025012874883*^9}, {
+   3.6902501631496315`*^9, 3.6902501657963066`*^9}, {3.690309161316588*^9, 
+   3.6903093169004107`*^9}, {3.690309351404518*^9, 3.690309487468131*^9}, {
+   3.6903111666996655`*^9, 3.690311182734065*^9}, {3.6903112231404905`*^9, 
+   3.6903112835411654`*^9}, {3.690311322180666*^9, 3.69031143411515*^9}, {
+   3.6903115060896077`*^9, 3.690311539562743*^9}, {3.690311590321697*^9, 
+   3.6903117208164043`*^9}, {3.6903117768315725`*^9, 
+   3.6903117814893084`*^9}, {3.6903118243469515`*^9, 3.690311920317788*^9}, {
+   3.6903120948472586`*^9, 3.6903121320494056`*^9}, {3.6903122835139847`*^9, 
+   3.6903122841499796`*^9}, {3.690312467632492*^9, 3.6903125735090156`*^9}, {
+   3.69031270033014*^9, 3.690312724647483*^9}, {3.6903135415180373`*^9, 
+   3.6903135618321223`*^9}, {3.6903242869881916`*^9, 
+   3.6903243421357737`*^9}, {3.6903243749410067`*^9, 
+   3.6903244303507805`*^9}, {3.6903246925480866`*^9, 
+   3.6903248324519005`*^9}, {3.690324871020842*^9, 3.6903252094234324`*^9}, {
+   3.690325309736594*^9, 3.69032532923178*^9}, {3.690325399412977*^9, 
+   3.690325488401347*^9}, {3.690325521421529*^9, 3.690325611077864*^9}, {
+   3.690325744302467*^9, 3.6903257524422398`*^9}, {3.690326197930975*^9, 
+   3.6903262142037554`*^9}, {3.690326248733941*^9, 3.690326485082919*^9}, {
+   3.6903265250549097`*^9, 3.690326529146222*^9}, {3.690326559274872*^9, 
+   3.6903265941528845`*^9}, {3.6903266274996862`*^9, 3.690326636258078*^9}, {
+   3.6903267416664543`*^9, 3.690326743146614*^9}, {3.6903268043062506`*^9, 
+   3.690326830472147*^9}, {3.6903269162654543`*^9, 3.690326927367407*^9}, {
+   3.69032700341797*^9, 3.6903271808475895`*^9}, {3.6903273716014585`*^9, 
+   3.6903273733201838`*^9}, {3.690327415216557*^9, 3.6903274237603765`*^9}, {
+   3.69032750842684*^9, 3.690327512496052*^9}, {3.690327633362608*^9, 
+   3.690327680761015*^9}, {3.690327720153243*^9, 3.690327751658885*^9}, {
+   3.690327789544845*^9, 3.6903277929442744`*^9}, {3.690327903105486*^9, 
+   3.6903279090827103`*^9}, {3.6903279507527742`*^9, 
+   3.6903279632088575`*^9}, {3.6903280262303057`*^9, 
+   3.6903280461047897`*^9}, {3.690328084901552*^9, 3.6903281541453066`*^9}, {
+   3.690328197056323*^9, 3.69032819923938*^9}, {3.690328283648548*^9, 
+   3.690328284328559*^9}, {3.6903284416803074`*^9, 3.690328442294553*^9}, {
+   3.690328526344454*^9, 3.690328549256422*^9}, {3.690328585360406*^9, 
+   3.690328600425658*^9}, 3.6903286314862533`*^9, {3.6903286757524643`*^9, 
+   3.690328893478427*^9}, {3.6903289424723916`*^9, 3.6903292286154084`*^9}, {
+   3.6903293136234913`*^9, 3.690329355406414*^9}, {3.690329394287672*^9, 
+   3.690329422039217*^9}, {3.6903294645990596`*^9, 3.6903294811367264`*^9}, {
+   3.6903295112871275`*^9, 3.6903297214887314`*^9}, {3.690329752362739*^9, 
+   3.6903298116798496`*^9}, {3.690329869723036*^9, 3.69032990224599*^9}, {
+   3.6903299367915077`*^9, 3.69032993888558*^9}, {3.690330117528648*^9, 
+   3.690330125918803*^9}, {3.6903301560099363`*^9, 3.6903301645263586`*^9}, {
+   3.6903302055844965`*^9, 3.690330411680039*^9}, {3.690330455193125*^9, 
+   3.6903304680669465`*^9}, {3.690330619757268*^9, 3.6903306226613107`*^9}, {
+   3.6903306909426966`*^9, 3.6903307911348734`*^9}, {3.6903308415569725`*^9, 
+   3.690330923373491*^9}, {3.6903309827253666`*^9, 3.6903309911094675`*^9}, {
+   3.6903310759093137`*^9, 3.690331076364483*^9}, {3.6903312015096054`*^9, 
+   3.690331276046418*^9}, {3.690331340444821*^9, 3.6903313708852053`*^9}, {
+   3.69033141362195*^9, 3.6903315215403614`*^9}, {3.6903316311775827`*^9, 
+   3.690331737670663*^9}, {3.690331771270959*^9, 3.6903318189046135`*^9}, {
+   3.690331939048564*^9, 3.6903319906246295`*^9}, {3.6903320270238643`*^9, 
+   3.6903320675930443`*^9}, {3.6903321691208353`*^9, 3.690332172721923*^9}, {
+   3.6903323286010327`*^9, 3.690332424014551*^9}, {3.6903325869749107`*^9, 
+   3.690332604600381*^9}}],
+
+Cell[BoxData[
+ PanelBox[
+  DynamicModuleBox[{$CellContext`f$$ = $CellContext`t, $CellContext`g$$ = \
+$CellContext`t, $CellContext`tmin$$ = -10, $CellContext`tmax$$ = 
+   10, $CellContext`tValue$$, $CellContext`plotType$$ = 0}, 
+   TagBox[GridBox[{
+      {
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            StyleBox[
+             "\"Parametric Equations\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {
+               
+               TemplateBox[{
+                StyleBox["\"x(t)=\"", 15, StripOnInput -> False],InputFieldBox[
+                  Dynamic[$CellContext`f$$]]},
+                "RowDefault"]},
+              {
+               
+               TemplateBox[{
+                StyleBox["\"y(t)=\"", 15, StripOnInput -> False],InputFieldBox[
+                  Dynamic[$CellContext`g$$]]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"]},
+          {
+           InterpretationBox[
+            StyleBox[
+             GraphicsBox[{},
+              BaselinePosition->(Scaled[0.] -> Baseline),
+              ImageSize->{1, 20}],
+             CacheGraphics->False],
+            Spacer[{1, 20}]]},
+          {
+           
+           TemplateBox[{
+            StyleBox[
+             "\"Equation Information\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {"\<\"Arc Length\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`int[
+                  StringForm["``\[DifferentialD]t", 
+                   Simplify[
+                    Sqrt[
+                    D[$CellContext`f$$, $CellContext`t]^2 + 
+                    D[$CellContext`g$$, $CellContext`t]^2]]]], StandardForm],
+                ImageSizeCache->{68., {8.5, 21.125}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\[DifferentialD]y\\), \\(\
+\[DifferentialD]x\\)]\\)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$],
+                  StandardForm],
+                ImageSizeCache->{11., {0., 15.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\\*SuperscriptBox[\\(\
+\[DifferentialD]\\), \\(2\\)]y\\), \
+\\(\[DifferentialD]\\*SuperscriptBox[\\(x\\), \\(2\\)]\\)]\\)\"\>", \
+"\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$, 
+                  2], StandardForm],
+                ImageSizeCache->{11., {0., 15.}}]},
+              {"\<\"y(x)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`brace[
+                  Column[
+                   Flatten[
+                    Map[Map[FullSimplify[
+                    Part[
+                    ReplaceAll[#, Rule -> List], 2]]& , 
+                    Flatten[#]]& , 
+                    Solve[
+                    Quiet[
+                    
+                    Eliminate[{$CellContext`x == $CellContext`f$$, \
+$CellContext`y == $CellContext`g$$}, $CellContext`t]], $CellContext`y]]]]], 
+                 StandardForm],
+                ImageSizeCache->{21., {5., 16.}}]}
+             },
+             AutoDelete->False,
+             GridBoxAlignment->{"Columns" -> {Right, Center, Left}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+             GridBoxItemStyle->{"Columns" -> {{
+                  Directive[FontSize -> 15]}}, "Rows" -> {{
+                  Directive[FontSize -> 15]}}}],
+            "Grid"]},
+          {
+           InterpretationBox[
+            StyleBox[
+             GraphicsBox[{},
+              BaselinePosition->(Scaled[0.] -> Baseline),
+              ImageSize->{1, 20}],
+             CacheGraphics->False],
+            Spacer[{1, 20}]]},
+          {
+           
+           TemplateBox[{
+            StyleBox["\"Plotting\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {
+               TagBox[GridBox[{
+                  {
+                   
+                   TemplateBox[{
+                    StyleBox[
+                    "\"\\!\\(\\*SubscriptBox[\\(t\\), \\(min\\)]\\)=\"", 15, 
+                    StripOnInput -> False],InputFieldBox[
+                    Dynamic[$CellContext`tmin$$]]},
+                    "RowDefault"]},
+                  {
+                   
+                   TemplateBox[{
+                    StyleBox[
+                    "\"\\!\\(\\*SubscriptBox[\\(t\\), \\(max\\)]\\)=\"", 15, 
+                    StripOnInput -> False],InputFieldBox[
+                    Dynamic[$CellContext`tmax$$]]},
+                    "RowDefault"]}
+                 },
+                 DefaultBaseStyle->"Column",
+                 GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+                 
+                 GridBoxItemSize->{
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                "Column"]},
+              {
+               InterpretationBox[
+                StyleBox[
+                 GraphicsBox[{},
+                  BaselinePosition->(Scaled[0.] -> Baseline),
+                  ImageSize->{1, 5}],
+                 CacheGraphics->False],
+                Spacer[{1, 5}]]},
+              {
+               TagBox[GridBox[{
+                  {
+                   FrameBox[
+                    TagBox[GridBox[{
+                    {
+                    
+                    TemplateBox[{
+                    StyleBox[
+                    "\"Plot Type\"", Italic, 16, StripOnInput -> False]},
+                    "RowDefault"]},
+                    {
+                    TemplateBox[{RadioButtonBox[
+                    Dynamic[$CellContext`plotType$$], {0}],InterpretationBox[
+                    StyleBox[
+                    GraphicsBox[{}, ImageSize -> {5, 1}, 
+                    BaselinePosition -> (Scaled[0.] -> Baseline)], 
+                    "CacheGraphics" -> False], 
+                    Spacer[{5, 1}]],"\"Parametric\""},
+                    "RowDefault"]},
+                    {
+                    TemplateBox[{RadioButtonBox[
+                    Dynamic[$CellContext`plotType$$], {1}],InterpretationBox[
+                    StyleBox[
+                    
+                    GraphicsBox[{}, ImageSize -> {5, 1}, 
+                    BaselinePosition -> (Scaled[0.] -> Baseline)], 
+                    "CacheGraphics" -> False], 
+                    Spacer[{5, 1}]],"\"Cartesian\""},
+                    "RowDefault"]}
+                    },
+                    DefaultBaseStyle->"Column",
+                    GridBoxAlignment->{"Columns" -> {{Left}}},
+                    
+                    GridBoxItemSize->{
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                    "Column"],
+                    StripOnInput->False], 
+                   DynamicBox[ToBoxes[
+                    If[$CellContext`plotType$$ == 0, 
+                    $CellContext`MakeParametricPlot[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$], 
+                    $CellContext`MakeCartesianPlot[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$]], StandardForm],
+                    ImageSizeCache->{500., {246., 254.}}]}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Rows" -> {{Top}}},
+                 
+                 GridBoxItemSize->{
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                "Grid"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Left}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"], 
+       InterpretationBox[
+        StyleBox[
+         GraphicsBox[{},
+          BaselinePosition->(Scaled[0.] -> Baseline),
+          ImageSize->{50, 1}],
+         CacheGraphics->False],
+        Spacer[{50, 1}]], 
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            StyleBox["\"Table\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           DynamicBox[ToBoxes[
+             Grid[
+              Prepend[
+               
+               Table[{$CellContext`t, $CellContext`f$$, $CellContext`g$$}, \
+{$CellContext`t, 
+                 Floor[$CellContext`tmin$$], 
+                 Ceiling[$CellContext`tmax$$]}], {
+                $CellContext`Subtitle["t"], 
+                $CellContext`Subtitle["x(t)"], 
+                $CellContext`Subtitle["y(t)"]}], ItemSize -> 10, Dividers -> 
+              Center], StandardForm],
+            ImageSizeCache->{468., {247.5, 256.5}}]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Left}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"]}
+     },
+     AutoDelete->False,
+     GridBoxAlignment->{"Rows" -> {{Top}}},
+     GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+    "Grid"],
+   DynamicModuleValues:>{}],
+  ImageSize->Full]], "Output",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{{3.6903294079429646`*^9, 3.6903294231144285`*^9}, {
+   3.690329701461089*^9, 3.6903297225441294`*^9}, {3.690329765822702*^9, 
+   3.6903298124856396`*^9}, 3.69032987136201*^9, {3.690329903568161*^9, 
+   3.690329939756918*^9}, 3.690330126782227*^9, 3.6903301656543765`*^9, 
+   3.6903302477655864`*^9, {3.6903303041325984`*^9, 3.690330310740431*^9}, 
+   3.6903303447940335`*^9, {3.6903303891168156`*^9, 3.6903304132128572`*^9}, 
+   3.6903304689970427`*^9, 3.6903306237004566`*^9, 3.690330796401243*^9, {
+   3.6903308527162724`*^9, 3.690330924038387*^9}, 3.690330992038518*^9, 
+   3.6903310770475283`*^9, {3.690331226020157*^9, 3.690331277358878*^9}, {
+   3.690331729443554*^9, 3.69033173863811*^9}, {3.6903319657754416`*^9, 
+   3.6903319913789034`*^9}, {3.690332037861801*^9, 3.690332068248459*^9}, {
+   3.690332173641164*^9, 3.69033218836754*^9}, {3.690332362460164*^9, 
+   3.6903323676876097`*^9}, {3.690332424866357*^9, 3.6903324300152435`*^9}, 
+   3.6903326068790917`*^9}],
+
+Cell[BoxData[
+ PanelBox[
+  DynamicModuleBox[{$CellContext`f$$ = 
+   ArcTan[$CellContext`t], $CellContext`g$$ = $CellContext`t, \
+$CellContext`tmin$$ = -10, $CellContext`tmax$$ = 
+   10, $CellContext`tValue$$, $CellContext`plotType$$ = 0}, 
+   TagBox[GridBox[{
+      {
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            StyleBox[
+             "\"Parametric Equations\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {
+               
+               TemplateBox[{
+                StyleBox["\"x(t)=\"", 15, StripOnInput -> False],InputFieldBox[
+                  Dynamic[$CellContext`f$$]]},
+                "RowDefault"]},
+              {
+               
+               TemplateBox[{
+                StyleBox["\"y(t)=\"", 15, StripOnInput -> False],InputFieldBox[
+                  Dynamic[$CellContext`g$$]]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"]},
+          {
+           InterpretationBox[
+            StyleBox[
+             GraphicsBox[{},
+              BaselinePosition->(Scaled[0.] -> Baseline),
+              ImageSize->{1, 20}],
+             CacheGraphics->False],
+            Spacer[{1, 20}]]},
+          {
+           
+           TemplateBox[{
+            StyleBox[
+             "\"Equation Information\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {"\<\"Arc Length\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`int[
+                  StringForm["``\[DifferentialD]t", 
+                   Simplify[
+                    Sqrt[
+                    D[$CellContext`f$$, $CellContext`t]^2 + 
+                    D[$CellContext`g$$, $CellContext`t]^2]]]], StandardForm],
+                ImageSizeCache->{149., {25., 35.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\[DifferentialD]y\\), \\(\
+\[DifferentialD]x\\)]\\)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$],
+                  StandardForm],
+                ImageSizeCache->{47., {0., 20.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\\*SuperscriptBox[\\(\
+\[DifferentialD]\\), \\(2\\)]y\\), \
+\\(\[DifferentialD]\\*SuperscriptBox[\\(x\\), \\(2\\)]\\)]\\)\"\>", \
+"\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$, 
+                  2], StandardForm],
+                ImageSizeCache->{87., {7., 20.}}]},
+              {"\<\"y(x)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`bracket[
+                  Column[
+                   Flatten[
+                    Map[Map[FullSimplify[
+                    Part[
+                    ReplaceAll[#, Rule -> List], 2]]& , 
+                    Flatten[#]]& , 
+                    Solve[
+                    Quiet[
+                    
+                    Eliminate[{$CellContext`x == $CellContext`f$$, \
+$CellContext`y == $CellContext`g$$}, $CellContext`t]], $CellContext`y]]]]], 
+                 StandardForm],
+                ImageSizeCache->{67., {5., 16.}}]}
+             },
+             AutoDelete->False,
+             GridBoxAlignment->{"Columns" -> {Right, Center, Left}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+             GridBoxItemStyle->{"Columns" -> {{
+                  Directive[FontSize -> 15]}}, "Rows" -> {{
+                  Directive[FontSize -> 15]}}}],
+            "Grid"]},
+          {
+           InterpretationBox[
+            StyleBox[
+             GraphicsBox[{},
+              BaselinePosition->(Scaled[0.] -> Baseline),
+              ImageSize->{1, 20}],
+             CacheGraphics->False],
+            Spacer[{1, 20}]]},
+          {
+           
+           TemplateBox[{
+            StyleBox["\"Plotting\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {
+               TagBox[GridBox[{
+                  {
+                   
+                   TemplateBox[{
+                    StyleBox[
+                    "\"\\!\\(\\*SubscriptBox[\\(t\\), \\(min\\)]\\)=\"", 15, 
+                    StripOnInput -> False],InputFieldBox[
+                    Dynamic[$CellContext`tmin$$]]},
+                    "RowDefault"]},
+                  {
+                   
+                   TemplateBox[{
+                    StyleBox[
+                    "\"\\!\\(\\*SubscriptBox[\\(t\\), \\(max\\)]\\)=\"", 15, 
+                    StripOnInput -> False],InputFieldBox[
+                    Dynamic[$CellContext`tmax$$]]},
+                    "RowDefault"]}
+                 },
+                 DefaultBaseStyle->"Column",
+                 GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+                 
+                 GridBoxItemSize->{
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                "Column"]},
+              {
+               InterpretationBox[
+                StyleBox[
+                 GraphicsBox[{},
+                  BaselinePosition->(Scaled[0.] -> Baseline),
+                  ImageSize->{1, 5}],
+                 CacheGraphics->False],
+                Spacer[{1, 5}]]},
+              {
+               TagBox[GridBox[{
+                  {
+                   FrameBox[
+                    TagBox[GridBox[{
+                    {
+                    
+                    TemplateBox[{
+                    StyleBox[
+                    "\"Plot Type\"", Italic, 16, StripOnInput -> False]},
+                    "RowDefault"]},
+                    {
+                    TemplateBox[{RadioButtonBox[
+                    Dynamic[$CellContext`plotType$$], {0}],InterpretationBox[
+                    StyleBox[
+                    GraphicsBox[{}, ImageSize -> {5, 1}, 
+                    BaselinePosition -> (Scaled[0.] -> Baseline)], 
+                    "CacheGraphics" -> False], 
+                    Spacer[{5, 1}]],"\"Parametric\""},
+                    "RowDefault"]},
+                    {
+                    TemplateBox[{RadioButtonBox[
+                    Dynamic[$CellContext`plotType$$], {1}],InterpretationBox[
+                    StyleBox[
+                    
+                    GraphicsBox[{}, ImageSize -> {5, 1}, 
+                    BaselinePosition -> (Scaled[0.] -> Baseline)], 
+                    "CacheGraphics" -> False], 
+                    Spacer[{5, 1}]],"\"Cartesian\""},
+                    "RowDefault"]}
+                    },
+                    DefaultBaseStyle->"Column",
+                    GridBoxAlignment->{"Columns" -> {{Left}}},
+                    
+                    GridBoxItemSize->{
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                    "Column"],
+                    StripOnInput->False], 
+                   DynamicBox[ToBoxes[
+                    If[$CellContext`plotType$$ == 0, 
+                    $CellContext`MakeParametricPlot[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$], 
+                    $CellContext`MakeCartesianPlot[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$]], StandardForm],
+                    ImageSizeCache->{500., {246., 254.}}]}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Rows" -> {{Top}}},
+                 
+                 GridBoxItemSize->{
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                "Grid"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Left}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"], 
+       InterpretationBox[
+        StyleBox[
+         GraphicsBox[{},
+          BaselinePosition->(Scaled[0.] -> Baseline),
+          ImageSize->{50, 1}],
+         CacheGraphics->False],
+        Spacer[{50, 1}]], 
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            StyleBox["\"Table\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           DynamicBox[ToBoxes[
+             Grid[
+              Prepend[
+               
+               Table[{$CellContext`t, $CellContext`f$$, $CellContext`g$$}, \
+{$CellContext`t, 
+                 Floor[$CellContext`tmin$$], 
+                 Ceiling[$CellContext`tmax$$]}], {
+                $CellContext`Subtitle["t"], 
+                $CellContext`Subtitle["x(t)"], 
+                $CellContext`Subtitle["y(t)"]}], ItemSize -> 10, Dividers -> 
+              Center], StandardForm],
+            ImageSizeCache->{468., {257., 266.}}]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Left}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"]}
+     },
+     AutoDelete->False,
+     GridBoxAlignment->{"Rows" -> {{Top}}},
+     GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+    "Grid"],
+   DynamicModuleValues:>{}],
+  ImageSize->Full]], "Output",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{{3.6903294079429646`*^9, 3.6903294231144285`*^9}, {
+   3.690329701461089*^9, 3.6903297225441294`*^9}, {3.690329765822702*^9, 
+   3.6903298124856396`*^9}, 3.69032987136201*^9, {3.690329903568161*^9, 
+   3.690329939756918*^9}, 3.690330126782227*^9, 3.6903301656543765`*^9, 
+   3.6903302477655864`*^9, {3.6903303041325984`*^9, 3.690330310740431*^9}, 
+   3.6903303447940335`*^9, {3.6903303891168156`*^9, 3.6903304132128572`*^9}, 
+   3.6903304689970427`*^9, 3.6903306237004566`*^9, 3.690330796401243*^9, {
+   3.6903308527162724`*^9, 3.690330924038387*^9}, 3.690330992038518*^9, 
+   3.6903310770475283`*^9, {3.690331226020157*^9, 3.690331277358878*^9}, {
+   3.690331729443554*^9, 3.69033173863811*^9}, {3.6903319657754416`*^9, 
+   3.6903319913789034`*^9}, {3.690332037861801*^9, 3.690332068248459*^9}, {
+   3.690332173641164*^9, 3.69033218836754*^9}, {3.690332362460164*^9, 
+   3.6903323676876097`*^9}, {3.690332424866357*^9, 3.6903324300152435`*^9}}],
+
+Cell[BoxData[
+ PanelBox[
+  DynamicModuleBox[{$CellContext`f$$ = $CellContext`t, $CellContext`g$$ = \
+$CellContext`t, $CellContext`tmin$$ = -10, $CellContext`tmax$$ = 
+   10, $CellContext`tValue$$, $CellContext`plotType$$ = 0}, 
+   TagBox[GridBox[{
+      {
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            StyleBox[
+             "\"Parametric Equations\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {
+               
+               TemplateBox[{
+                StyleBox["\"x(t)=\"", 15, StripOnInput -> False],InputFieldBox[
+                  Dynamic[$CellContext`f$$]]},
+                "RowDefault"]},
+              {
+               
+               TemplateBox[{
+                StyleBox["\"y(t)=\"", 15, StripOnInput -> False],InputFieldBox[
+                  Dynamic[$CellContext`g$$]]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"]},
+          {
+           InterpretationBox[
+            StyleBox[
+             GraphicsBox[{},
+              BaselinePosition->(Scaled[0.] -> Baseline),
+              ImageSize->{1, 20}],
+             CacheGraphics->False],
+            Spacer[{1, 20}]]},
+          {
+           
+           TemplateBox[{
+            StyleBox[
+             "\"Equation Information\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {"\<\"Arc Length\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`int[
+                  StringForm["``\[DifferentialD]t", 
+                   Simplify[
+                    Sqrt[
+                    D[$CellContext`f$$, $CellContext`t]^2 + 
+                    D[$CellContext`g$$, $CellContext`t]^2]]]], StandardForm],
+                ImageSizeCache->{68., {9., 22.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\[DifferentialD]y\\), \\(\
+\[DifferentialD]x\\)]\\)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$],
+                  StandardForm],
+                ImageSizeCache->{11., {0., 15.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\\*SuperscriptBox[\\(\
+\[DifferentialD]\\), \\(2\\)]y\\), \
+\\(\[DifferentialD]\\*SuperscriptBox[\\(x\\), \\(2\\)]\\)]\\)\"\>", \
+"\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$, 
+                  2], StandardForm],
+                ImageSizeCache->{11., {0., 15.}}]},
+              {"\<\"y(x)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`bracket[
+                  Column[
+                   Flatten[
+                    Map[Map[FullSimplify[
+                    Part[
+                    ReplaceAll[#, Rule -> List], 2]]& , 
+                    Flatten[#]]& , 
+                    Solve[
+                    Quiet[
+                    
+                    Eliminate[{$CellContext`x == $CellContext`f$$, \
+$CellContext`y == $CellContext`g$$}, $CellContext`t]], $CellContext`y]]]]], 
+                 StandardForm],
+                ImageSizeCache->{21., {5., 16.}}]}
+             },
+             AutoDelete->False,
+             GridBoxAlignment->{"Columns" -> {Right, Center, Left}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+             GridBoxItemStyle->{"Columns" -> {{
+                  Directive[FontSize -> 15]}}, "Rows" -> {{
+                  Directive[FontSize -> 15]}}}],
+            "Grid"]},
+          {
+           InterpretationBox[
+            StyleBox[
+             GraphicsBox[{},
+              BaselinePosition->(Scaled[0.] -> Baseline),
+              ImageSize->{1, 20}],
+             CacheGraphics->False],
+            Spacer[{1, 20}]]},
+          {
+           
+           TemplateBox[{
+            StyleBox["\"Plotting\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {
+               TagBox[GridBox[{
+                  {
+                   
+                   TemplateBox[{
+                    StyleBox[
+                    "\"\\!\\(\\*SubscriptBox[\\(t\\), \\(min\\)]\\)=\"", 15, 
+                    StripOnInput -> False],InputFieldBox[
+                    Dynamic[$CellContext`tmin$$]]},
+                    "RowDefault"]},
+                  {
+                   
+                   TemplateBox[{
+                    StyleBox[
+                    "\"\\!\\(\\*SubscriptBox[\\(t\\), \\(max\\)]\\)=\"", 15, 
+                    StripOnInput -> False],InputFieldBox[
+                    Dynamic[$CellContext`tmax$$]]},
+                    "RowDefault"]}
+                 },
+                 DefaultBaseStyle->"Column",
+                 GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+                 
+                 GridBoxItemSize->{
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                "Column"]},
+              {
+               InterpretationBox[
+                StyleBox[
+                 GraphicsBox[{},
+                  BaselinePosition->(Scaled[0.] -> Baseline),
+                  ImageSize->{1, 5}],
+                 CacheGraphics->False],
+                Spacer[{1, 5}]]},
+              {
+               TagBox[GridBox[{
+                  {
+                   FrameBox[
+                    TagBox[GridBox[{
+                    {
+                    
+                    TemplateBox[{
+                    StyleBox[
+                    "\"Plot Type\"", Italic, 16, StripOnInput -> False]},
+                    "RowDefault"]},
+                    {
+                    TemplateBox[{RadioButtonBox[
+                    Dynamic[$CellContext`plotType$$], {0}],InterpretationBox[
+                    StyleBox[
+                    GraphicsBox[{}, ImageSize -> {5, 1}, 
+                    BaselinePosition -> (Scaled[0.] -> Baseline)], 
+                    "CacheGraphics" -> False], 
+                    Spacer[{5, 1}]],"\"Parametric\""},
+                    "RowDefault"]},
+                    {
+                    TemplateBox[{RadioButtonBox[
+                    Dynamic[$CellContext`plotType$$], {1}],InterpretationBox[
+                    StyleBox[
+                    
+                    GraphicsBox[{}, ImageSize -> {5, 1}, 
+                    BaselinePosition -> (Scaled[0.] -> Baseline)], 
+                    "CacheGraphics" -> False], 
+                    Spacer[{5, 1}]],"\"Cartesian\""},
+                    "RowDefault"]}
+                    },
+                    DefaultBaseStyle->"Column",
+                    GridBoxAlignment->{"Columns" -> {{Left}}},
+                    
+                    GridBoxItemSize->{
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                    "Column"],
+                    StripOnInput->False], 
+                   DynamicBox[ToBoxes[
+                    If[$CellContext`plotType$$ == 0, 
+                    $CellContext`MakeParametricPlot[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$], 
+                    $CellContext`MakeCartesianPlot[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$]], StandardForm],
+                    ImageSizeCache->{500., {246., 254.}}]}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Rows" -> {{Top}}},
+                 
+                 GridBoxItemSize->{
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                "Grid"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Left}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"], 
+       InterpretationBox[
+        StyleBox[
+         GraphicsBox[{},
+          BaselinePosition->(Scaled[0.] -> Baseline),
+          ImageSize->{50, 1}],
+         CacheGraphics->False],
+        Spacer[{50, 1}]], 
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            StyleBox["\"Table\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           DynamicBox[ToBoxes[
+             Grid[
+              Prepend[
+               
+               Table[{$CellContext`t, $CellContext`f$$, $CellContext`g$$}, \
+{$CellContext`t, 
+                 Floor[$CellContext`tmin$$], 
+                 Ceiling[$CellContext`tmax$$]}], {
+                $CellContext`Subtitle["t"], 
+                $CellContext`Subtitle["x(t)"], 
+                $CellContext`Subtitle["y(t)"]}], ItemSize -> 10, Dividers -> 
+              Center], StandardForm],
+            ImageSizeCache->{468., {248., 257.}}]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Left}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"]}
+     },
+     AutoDelete->False,
+     GridBoxAlignment->{"Rows" -> {{Top}}},
+     GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+    "Grid"],
+   DynamicModuleValues:>{}],
+  ImageSize->Full]], "Output",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{{3.6903294079429646`*^9, 3.6903294231144285`*^9}, {
+   3.690329701461089*^9, 3.6903297225441294`*^9}, {3.690329765822702*^9, 
+   3.6903298124856396`*^9}, 3.69032987136201*^9, {3.690329903568161*^9, 
+   3.690329939756918*^9}, 3.690330126782227*^9, 3.6903301656543765`*^9, 
+   3.6903302477655864`*^9, {3.6903303041325984`*^9, 3.690330310740431*^9}, 
+   3.6903303447940335`*^9, {3.6903303891168156`*^9, 3.6903304132128572`*^9}, 
+   3.6903304689970427`*^9, 3.6903306237004566`*^9, 3.690330796401243*^9, {
+   3.6903308527162724`*^9, 3.690330924038387*^9}, 3.690330992038518*^9, 
+   3.6903310770475283`*^9, {3.690331226020157*^9, 3.690331277358878*^9}, {
+   3.690331729443554*^9, 3.69033173863811*^9}, {3.6903319657754416`*^9, 
+   3.6903319913789034`*^9}, {3.690332037861801*^9, 3.690332068248459*^9}, {
+   3.690332173641164*^9, 3.69033218836754*^9}, {3.690332362460164*^9, 
+   3.6903323676876097`*^9}}],
+
+Cell[BoxData[
+ PanelBox[
+  DynamicModuleBox[{$CellContext`f$$ = $CellContext`t, $CellContext`g$$ = \
+$CellContext`t, $CellContext`tmin$$ = -10, $CellContext`tmax$$ = 
+   10, $CellContext`tValue$$, $CellContext`plotType$$ = 0}, 
+   TagBox[GridBox[{
+      {
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            StyleBox[
+             "\"Parametric Equations\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {
+               
+               TemplateBox[{
+                StyleBox["\"x(t)=\"", 15, StripOnInput -> False],InputFieldBox[
+                  Dynamic[$CellContext`f$$]]},
+                "RowDefault"]},
+              {
+               
+               TemplateBox[{
+                StyleBox["\"y(t)=\"", 15, StripOnInput -> False],InputFieldBox[
+                  Dynamic[$CellContext`g$$]]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"]},
+          {
+           InterpretationBox[
+            StyleBox[
+             GraphicsBox[{},
+              BaselinePosition->(Scaled[0.] -> Baseline),
+              ImageSize->{1, 20}],
+             CacheGraphics->False],
+            Spacer[{1, 20}]]},
+          {
+           
+           TemplateBox[{
+            StyleBox[
+             "\"Equation Information\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {"\<\"Arc Length\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`integral[
+                  StringForm["``\[DifferentialD]t", 
+                   Simplify[
+                    Sqrt[
+                    D[$CellContext`f$$, $CellContext`t]^2 + 
+                    D[$CellContext`g$$, $CellContext`t]^2]]]], StandardForm],
+                ImageSizeCache->{140., {8., 22.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\[DifferentialD]y\\), \\(\
+\[DifferentialD]x\\)]\\)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$],
+                  StandardForm],
+                ImageSizeCache->{11., {0., 15.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\\*SuperscriptBox[\\(\
+\[DifferentialD]\\), \\(2\\)]y\\), \
+\\(\[DifferentialD]\\*SuperscriptBox[\\(x\\), \\(2\\)]\\)]\\)\"\>", \
+"\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$, 
+                  2], StandardForm],
+                ImageSizeCache->{11., {0., 15.}}]},
+              {"\<\"y(x)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`bracket[
+                  Column[
+                   Flatten[
+                    Map[Map[FullSimplify[
+                    Part[
+                    ReplaceAll[#, Rule -> List], 2]]& , 
+                    Flatten[#]]& , 
+                    Solve[
+                    Quiet[
+                    
+                    Eliminate[{$CellContext`x == $CellContext`f$$, \
+$CellContext`y == $CellContext`g$$}, $CellContext`t]], $CellContext`y]]]]], 
+                 StandardForm],
+                ImageSizeCache->{21., {5., 16.}}]}
+             },
+             AutoDelete->False,
+             GridBoxAlignment->{"Columns" -> {Right, Center, Left}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+             GridBoxItemStyle->{"Columns" -> {{
+                  Directive[FontSize -> 15]}}, "Rows" -> {{
+                  Directive[FontSize -> 15]}}}],
+            "Grid"]},
+          {
+           InterpretationBox[
+            StyleBox[
+             GraphicsBox[{},
+              BaselinePosition->(Scaled[0.] -> Baseline),
+              ImageSize->{1, 20}],
+             CacheGraphics->False],
+            Spacer[{1, 20}]]},
+          {
+           
+           TemplateBox[{
+            StyleBox["\"Plotting\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {
+               TagBox[GridBox[{
+                  {
+                   
+                   TemplateBox[{
+                    StyleBox[
+                    "\"\\!\\(\\*SubscriptBox[\\(t\\), \\(min\\)]\\)=\"", 15, 
+                    StripOnInput -> False],InputFieldBox[
+                    Dynamic[$CellContext`tmin$$]]},
+                    "RowDefault"]},
+                  {
+                   
+                   TemplateBox[{
+                    StyleBox[
+                    "\"\\!\\(\\*SubscriptBox[\\(t\\), \\(max\\)]\\)=\"", 15, 
+                    StripOnInput -> False],InputFieldBox[
+                    Dynamic[$CellContext`tmax$$]]},
+                    "RowDefault"]}
+                 },
+                 DefaultBaseStyle->"Column",
+                 GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+                 
+                 GridBoxItemSize->{
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                "Column"]},
+              {
+               InterpretationBox[
+                StyleBox[
+                 GraphicsBox[{},
+                  BaselinePosition->(Scaled[0.] -> Baseline),
+                  ImageSize->{1, 5}],
+                 CacheGraphics->False],
+                Spacer[{1, 5}]]},
+              {
+               TagBox[GridBox[{
+                  {
+                   FrameBox[
+                    TagBox[GridBox[{
+                    {
+                    
+                    TemplateBox[{
+                    StyleBox[
+                    "\"Plot Type\"", Italic, 16, StripOnInput -> False]},
+                    "RowDefault"]},
+                    {
+                    TemplateBox[{RadioButtonBox[
+                    Dynamic[$CellContext`plotType$$], {0}],InterpretationBox[
+                    StyleBox[
+                    GraphicsBox[{}, ImageSize -> {5, 1}, 
+                    BaselinePosition -> (Scaled[0.] -> Baseline)], 
+                    "CacheGraphics" -> False], 
+                    Spacer[{5, 1}]],"\"Parametric\""},
+                    "RowDefault"]},
+                    {
+                    TemplateBox[{RadioButtonBox[
+                    Dynamic[$CellContext`plotType$$], {1}],InterpretationBox[
+                    StyleBox[
+                    
+                    GraphicsBox[{}, ImageSize -> {5, 1}, 
+                    BaselinePosition -> (Scaled[0.] -> Baseline)], 
+                    "CacheGraphics" -> False], 
+                    Spacer[{5, 1}]],"\"Cartesian\""},
+                    "RowDefault"]}
+                    },
+                    DefaultBaseStyle->"Column",
+                    GridBoxAlignment->{"Columns" -> {{Left}}},
+                    
+                    GridBoxItemSize->{
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                    "Column"],
+                    StripOnInput->False], 
+                   DynamicBox[ToBoxes[
+                    If[$CellContext`plotType$$ == 0, 
+                    $CellContext`MakeParametricPlot[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$], 
+                    $CellContext`MakeCartesianPlot[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$]], StandardForm],
+                    ImageSizeCache->{500., {246., 254.}}]}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Rows" -> {{Top}}},
+                 
+                 GridBoxItemSize->{
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                "Grid"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Left}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"], 
+       InterpretationBox[
+        StyleBox[
+         GraphicsBox[{},
+          BaselinePosition->(Scaled[0.] -> Baseline),
+          ImageSize->{50, 1}],
+         CacheGraphics->False],
+        Spacer[{50, 1}]], 
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            StyleBox["\"Table\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           DynamicBox[ToBoxes[
+             Grid[
+              Prepend[
+               
+               Table[{$CellContext`t, $CellContext`f$$, $CellContext`g$$}, \
+{$CellContext`t, 
+                 Floor[$CellContext`tmin$$], 
+                 Ceiling[$CellContext`tmax$$]}], {
+                $CellContext`Subtitle["t"], 
+                $CellContext`Subtitle["x(t)"], 
+                $CellContext`Subtitle["y(t)"]}], ItemSize -> 10, Dividers -> 
+              Center], StandardForm],
+            ImageSizeCache->{468., {248., 257.}}]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Left}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"]}
+     },
+     AutoDelete->False,
+     GridBoxAlignment->{"Rows" -> {{Top}}},
+     GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+    "Grid"],
+   DynamicModuleValues:>{}],
+  ImageSize->Full]], "Output",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{{3.6903294079429646`*^9, 3.6903294231144285`*^9}, {
+   3.690329701461089*^9, 3.6903297225441294`*^9}, {3.690329765822702*^9, 
+   3.6903298124856396`*^9}, 3.69032987136201*^9, {3.690329903568161*^9, 
+   3.690329939756918*^9}, 3.690330126782227*^9, 3.6903301656543765`*^9, 
+   3.6903302477655864`*^9, {3.6903303041325984`*^9, 3.690330310740431*^9}, 
+   3.6903303447940335`*^9, {3.6903303891168156`*^9, 3.6903304132128572`*^9}, 
+   3.6903304689970427`*^9, 3.6903306237004566`*^9, 3.690330796401243*^9, {
+   3.6903308527162724`*^9, 3.690330924038387*^9}, 3.690330992038518*^9, 
+   3.6903310770475283`*^9, {3.690331226020157*^9, 3.690331277358878*^9}, {
+   3.690331729443554*^9, 3.69033173863811*^9}, {3.6903319657754416`*^9, 
+   3.6903319913789034`*^9}, {3.690332037861801*^9, 3.690332068248459*^9}, {
+   3.690332173641164*^9, 3.69033218836754*^9}, 3.690332362460164*^9}],
+
+Cell[BoxData[
+ PanelBox[
+  DynamicModuleBox[{$CellContext`f$$ = 
+   ArcSin[$CellContext`t], $CellContext`g$$ = 1, $CellContext`tmin$$ = 
+   0, $CellContext`tmax$$ = 2 
+   Pi, $CellContext`tValue$$, $CellContext`plotType$$ = 0}, 
+   TagBox[GridBox[{
+      {
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            StyleBox[
+             "\"Parametric Equations\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {
+               
+               TemplateBox[{
+                StyleBox["\"x(t)=\"", 15, StripOnInput -> False],InputFieldBox[
+                  Dynamic[$CellContext`f$$]]},
+                "RowDefault"]},
+              {
+               
+               TemplateBox[{
+                StyleBox["\"y(t)=\"", 15, StripOnInput -> False],InputFieldBox[
+                  Dynamic[$CellContext`g$$]]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"]},
+          {
+           InterpretationBox[
+            StyleBox[
+             GraphicsBox[{},
+              BaselinePosition->(Scaled[0.] -> Baseline),
+              ImageSize->{1, 20}],
+             CacheGraphics->False],
+            Spacer[{1, 20}]]},
+          {
+           
+           TemplateBox[{
+            StyleBox[
+             "\"Equation Information\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {"\<\"Arc Length\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 StringForm["\[Integral]``\[DifferentialD]t", 
+                  Simplify[
+                   Sqrt[
+                   D[$CellContext`f$$, $CellContext`t]^2 + 
+                    D[$CellContext`g$$, $CellContext`t]^2]]], StandardForm],
+                ImageSizeCache->{99., {23., 37.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\[DifferentialD]y\\), \\(\
+\[DifferentialD]x\\)]\\)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$],
+                  StandardForm],
+                ImageSizeCache->{11., {0., 15.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\\*SuperscriptBox[\\(\
+\[DifferentialD]\\), \\(2\\)]y\\), \
+\\(\[DifferentialD]\\*SuperscriptBox[\\(x\\), \\(2\\)]\\)]\\)\"\>", \
+"\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$, 
+                  2], StandardForm],
+                ImageSizeCache->{11., {0., 15.}}]},
+              {"\<\"y(x)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`bracket[
+                  Column[
+                   Flatten[
+                    Map[Map[FullSimplify[
+                    Part[
+                    ReplaceAll[#, Rule -> List], 2]]& , 
+                    Flatten[#]]& , 
+                    Solve[
+                    Quiet[
+                    
+                    Eliminate[{$CellContext`x == $CellContext`f$$, \
+$CellContext`y == $CellContext`g$$}, $CellContext`t]], $CellContext`y]]]]], 
+                 StandardForm],
+                ImageSizeCache->{22., {5., 16.}}]}
+             },
+             AutoDelete->False,
+             GridBoxAlignment->{"Columns" -> {Right, Center, Left}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+             GridBoxItemStyle->{"Columns" -> {{
+                  Directive[FontSize -> 15]}}, "Rows" -> {{
+                  Directive[FontSize -> 15]}}}],
+            "Grid"]},
+          {
+           InterpretationBox[
+            StyleBox[
+             GraphicsBox[{},
+              BaselinePosition->(Scaled[0.] -> Baseline),
+              ImageSize->{1, 20}],
+             CacheGraphics->False],
+            Spacer[{1, 20}]]},
+          {
+           
+           TemplateBox[{
+            StyleBox["\"Plotting\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           TagBox[GridBox[{
+              {
+               TagBox[GridBox[{
+                  {
+                   
+                   TemplateBox[{
+                    StyleBox[
+                    "\"\\!\\(\\*SubscriptBox[\\(t\\), \\(min\\)]\\)=\"", 15, 
+                    StripOnInput -> False],InputFieldBox[
+                    Dynamic[$CellContext`tmin$$]]},
+                    "RowDefault"]},
+                  {
+                   
+                   TemplateBox[{
+                    StyleBox[
+                    "\"\\!\\(\\*SubscriptBox[\\(t\\), \\(max\\)]\\)=\"", 15, 
+                    StripOnInput -> False],InputFieldBox[
+                    Dynamic[$CellContext`tmax$$]]},
+                    "RowDefault"]}
+                 },
+                 DefaultBaseStyle->"Column",
+                 GridBoxAlignment->{"Columns" -> {{"="}}, "Rows" -> {{"="}}},
+                 
+                 GridBoxItemSize->{
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                "Column"]},
+              {
+               InterpretationBox[
+                StyleBox[
+                 GraphicsBox[{},
+                  BaselinePosition->(Scaled[0.] -> Baseline),
+                  ImageSize->{1, 5}],
+                 CacheGraphics->False],
+                Spacer[{1, 5}]]},
+              {
+               TagBox[GridBox[{
+                  {
+                   FrameBox[
+                    TagBox[GridBox[{
+                    {
+                    
+                    TemplateBox[{
+                    StyleBox[
+                    "\"Plot Type\"", Italic, 16, StripOnInput -> False]},
+                    "RowDefault"]},
+                    {
+                    TemplateBox[{RadioButtonBox[
+                    Dynamic[$CellContext`plotType$$], {0}],InterpretationBox[
+                    StyleBox[
+                    
+                    GraphicsBox[{}, ImageSize -> {5, 1}, 
+                    BaselinePosition -> (Scaled[0.] -> Baseline)], 
+                    "CacheGraphics" -> False], 
+                    Spacer[{5, 1}]],"\"Parametric\""},
+                    "RowDefault"]},
+                    {
+                    TemplateBox[{RadioButtonBox[
+                    Dynamic[$CellContext`plotType$$], {1}],InterpretationBox[
+                    StyleBox[
+                    
+                    GraphicsBox[{}, ImageSize -> {5, 1}, 
+                    BaselinePosition -> (Scaled[0.] -> Baseline)], 
+                    "CacheGraphics" -> False], 
+                    Spacer[{5, 1}]],"\"Cartesian\""},
+                    "RowDefault"]}
+                    },
+                    DefaultBaseStyle->"Column",
+                    GridBoxAlignment->{"Columns" -> {{Left}}},
+                    
+                    GridBoxItemSize->{
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                    "Column"],
+                    StripOnInput->False], 
+                   DynamicBox[ToBoxes[
+                    If[$CellContext`plotType$$ == 0, 
+                    $CellContext`MakeParametricPlot[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$], 
+                    $CellContext`MakeCartesianPlot[$CellContext`f$$, \
+$CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$]], StandardForm],
+                    ImageSizeCache->{500., {246., 254.}}]}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Rows" -> {{Top}}},
+                 
+                 GridBoxItemSize->{
+                  "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+                "Grid"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Left}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"], 
+       InterpretationBox[
+        StyleBox[
+         GraphicsBox[{},
+          BaselinePosition->(Scaled[0.] -> Baseline),
+          ImageSize->{50, 1}],
+         CacheGraphics->False],
+        Spacer[{50, 1}]], 
+       TagBox[GridBox[{
+          {
+           
+           TemplateBox[{
+            StyleBox["\"Table\"", Bold, 20, StripOnInput -> False]},
+            "RowDefault"]},
+          {
+           DynamicBox[ToBoxes[
+             Grid[
+              Prepend[
+               
+               Table[{$CellContext`t, $CellContext`f$$, $CellContext`g$$}, \
+{$CellContext`t, 
+                 Floor[$CellContext`tmin$$], 
+                 Ceiling[$CellContext`tmax$$]}], {
+                $CellContext`Subtitle["t"], 
+                $CellContext`Subtitle["x(t)"], 
+                $CellContext`Subtitle["y(t)"]}], ItemSize -> 10, Dividers -> 
+              Center], StandardForm],
+            ImageSizeCache->{468., {103., 112.}}]}
+         },
+         DefaultBaseStyle->"Column",
+         GridBoxAlignment->{"Columns" -> {{Left}}},
+         GridBoxItemSize->{
+          "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+        "Column"]}
+     },
+     AutoDelete->False,
+     GridBoxAlignment->{"Rows" -> {{Top}}},
+     GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+    "Grid"],
+   DynamicModuleValues:>{}],
+  ImageSize->Full]], "Output",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{{3.6903294079429646`*^9, 3.6903294231144285`*^9}, {
+   3.690329701461089*^9, 3.6903297225441294`*^9}, {3.690329765822702*^9, 
+   3.6903298124856396`*^9}, 3.69032987136201*^9, {3.690329903568161*^9, 
+   3.690329939756918*^9}, 3.690330126782227*^9, 3.6903301656543765`*^9, 
+   3.6903302477655864`*^9, {3.6903303041325984`*^9, 3.690330310740431*^9}, 
+   3.6903303447940335`*^9, {3.6903303891168156`*^9, 3.6903304132128572`*^9}, 
+   3.6903304689970427`*^9, 3.6903306237004566`*^9, 3.690330796401243*^9, {
+   3.6903308527162724`*^9, 3.690330924038387*^9}, 3.690330992038518*^9, 
+   3.6903310770475283`*^9, {3.690331226020157*^9, 3.690331277358878*^9}, {
+   3.690331729443554*^9, 3.69033173863811*^9}, {3.6903319657754416`*^9, 
+   3.6903319913789034`*^9}, {3.690332037861801*^9, 3.690332068248459*^9}, {
+   3.690332173641164*^9, 3.69033218836754*^9}}]
+}, Open  ]]
+},
+WindowSize->{1536, 791},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 26475, 548, 4844, "Input"],
+Cell[27058, 572, 10756, 268, 987, "Output"],
+Cell[37817, 842, 10738, 268, 1017, "Output"],
+Cell[48558, 1112, 10676, 267, 987, "Output"],
+Cell[59237, 1381, 10652, 266, 1005, "Output"],
+Cell[69892, 1649, 10618, 267, 1017, "Output"]
+}, Open  ]]
+}
+]
+*)
+
