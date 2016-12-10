@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     37302,        845]
-NotebookOptionsPosition[     36979,        829]
-NotebookOutlinePosition[     37323,        844]
-CellTagsIndexPosition[     37280,        841]
+NotebookDataLength[     37356,        844]
+NotebookOptionsPosition[     37034,        828]
+NotebookOutlinePosition[     37378,        843]
+CellTagsIndexPosition[     37335,        840]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -328,23 +328,6 @@ Cell[BoxData[{
                     RowBox[{"g", ",", "t"}], "]"}], "2"]}], ")"}]}], "]"}]}], 
                     "]"}], "//", "int"}], ")"}]}]}], "}"}], ",", 
                  "\[IndentingNewLine]", 
-                 RowBox[{"{", 
-                  RowBox[{
-                  "\"\<\!\(\*FractionBox[\(\[DifferentialD]y\), \(\
-\[DifferentialD]x\)]\)\>\"", ",", "\"\<=\>\"", ",", 
-                   RowBox[{"Dynamic", "@", 
-                    RowBox[{"ParametricD", "[", 
-                    RowBox[{"f", ",", "g"}], "]"}]}]}], "}"}], ",", 
-                 "\[IndentingNewLine]", 
-                 RowBox[{"{", 
-                  RowBox[{
-                  "\"\<\!\(\*FractionBox[\(\*SuperscriptBox[\(\[DifferentialD]\
-\), \(2\)]y\), \(\[DifferentialD]\*SuperscriptBox[\(x\), \(2\)]\)]\)\>\"", 
-                   ",", "\"\<=\>\"", ",", 
-                   RowBox[{"Dynamic", "@", 
-                    RowBox[{"ParametricD", "[", 
-                    RowBox[{"f", ",", "g", ",", "2"}], "]"}]}]}], "}"}], ",", 
-                 "\[IndentingNewLine]", 
                  RowBox[{"{", "\[IndentingNewLine]", 
                   RowBox[{
                   "\"\<y(x)\>\"", ",", "\"\<=\>\"", ",", 
@@ -377,8 +360,24 @@ Cell[BoxData[{
                     "]"}]}], ",", "y"}], "]"}]}], ")"}]}], 
                     "\[IndentingNewLine]", "//", "Column"}], " ", "//", 
                     "brace"}], "\[IndentingNewLine]", "]"}]}], 
-                  "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", 
-                "}"}], ",", "\[IndentingNewLine]", 
+                  "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+                 RowBox[{"{", 
+                  RowBox[{
+                  "\"\<\!\(\*FractionBox[\(\[DifferentialD]y\), \(\
+\[DifferentialD]x\)]\)\>\"", ",", "\"\<=\>\"", ",", 
+                   RowBox[{"Dynamic", "@", 
+                    RowBox[{"ParametricD", "[", 
+                    RowBox[{"f", ",", "g"}], "]"}]}]}], "}"}], ",", 
+                 "\[IndentingNewLine]", 
+                 RowBox[{"{", 
+                  RowBox[{
+                  "\"\<\!\(\*FractionBox[\(\*SuperscriptBox[\(\[DifferentialD]\
+\), \(2\)]y\), \(\[DifferentialD]\*SuperscriptBox[\(x\), \(2\)]\)]\)\>\"", 
+                   ",", "\"\<=\>\"", ",", 
+                   RowBox[{"Dynamic", "@", 
+                    RowBox[{"ParametricD", "[", 
+                    RowBox[{"f", ",", "g", ",", "2"}], "]"}]}]}], "}"}]}], 
+                "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
                RowBox[{"Alignment", "\[Rule]", 
                 RowBox[{"{", 
                  RowBox[{"{", 
@@ -569,7 +568,7 @@ Cell[BoxData[{
    3.6903323286010327`*^9, 3.690332424014551*^9}, {3.6903325869749107`*^9, 
    3.690332604600381*^9}, {3.6903332365163126`*^9, 3.6903332426480875`*^9}, {
    3.690333273548688*^9, 3.6903333158898306`*^9}, {3.6903333459961624`*^9, 
-   3.6903333552242107`*^9}}],
+   3.6903333552242107`*^9}, {3.690335196155427*^9, 3.690335234462801*^9}}],
 
 Cell[BoxData[
  PanelBox[
@@ -630,21 +629,7 @@ $CellContext`t, $CellContext`tmin$$ = -10, $CellContext`tmax$$ =
                     Sqrt[
                     D[$CellContext`f$$, $CellContext`t]^2 + 
                     D[$CellContext`g$$, $CellContext`t]^2]]]], StandardForm],
-                ImageSizeCache->{68., {9., 22.}}]},
-              {"\<\"\\!\\(\\*FractionBox[\\(\[DifferentialD]y\\), \\(\
-\[DifferentialD]x\\)]\\)\"\>", "\<\"=\"\>", 
-               DynamicBox[ToBoxes[
-                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$],
-                  StandardForm],
-                ImageSizeCache->{11., {0., 15.}}]},
-              {"\<\"\\!\\(\\*FractionBox[\\(\\*SuperscriptBox[\\(\
-\[DifferentialD]\\), \\(2\\)]y\\), \
-\\(\[DifferentialD]\\*SuperscriptBox[\\(x\\), \\(2\\)]\\)]\\)\"\>", \
-"\<\"=\"\>", 
-               DynamicBox[ToBoxes[
-                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$, 
-                  2], StandardForm],
-                ImageSizeCache->{11., {0., 15.}}]},
+                ImageSizeCache->{68., {8.5, 21.125}}]},
               {"\<\"y(x)\"\>", "\<\"=\"\>", 
                DynamicBox[ToBoxes[
                  $CellContext`brace[
@@ -660,7 +645,21 @@ $CellContext`t, $CellContext`tmin$$ = -10, $CellContext`tmax$$ =
                     Eliminate[{$CellContext`x == $CellContext`f$$, \
 $CellContext`y == $CellContext`g$$}, $CellContext`t]], $CellContext`y]]]]], 
                  StandardForm],
-                ImageSizeCache->{21., {5., 16.}}]}
+                ImageSizeCache->{21., {5., 16.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\[DifferentialD]y\\), \\(\
+\[DifferentialD]x\\)]\\)\"\>", "\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$],
+                  StandardForm],
+                ImageSizeCache->{11., {0., 15.}}]},
+              {"\<\"\\!\\(\\*FractionBox[\\(\\*SuperscriptBox[\\(\
+\[DifferentialD]\\), \\(2\\)]y\\), \
+\\(\[DifferentialD]\\*SuperscriptBox[\\(x\\), \\(2\\)]\\)]\\)\"\>", \
+"\<\"=\"\>", 
+               DynamicBox[ToBoxes[
+                 $CellContext`ParametricD[$CellContext`f$$, $CellContext`g$$, 
+                  2], StandardForm],
+                ImageSizeCache->{11., {0., 15.}}]}
              },
              AutoDelete->False,
              GridBoxAlignment->{"Columns" -> {Right, Center, Left}},
@@ -824,7 +823,7 @@ $CellContext`g$$, $CellContext`tmin$$, $CellContext`tmax$$]], StandardForm],
     "Grid"],
    DynamicModuleValues:>{}],
   ImageSize->Full]], "Output",
- CellChangeTimes->{3.690333832443982*^9}]
+ CellChangeTimes->{{3.69033521493252*^9, 3.690335235297288*^9}}]
 }, Open  ]]
 },
 WindowSize->{1536, 791},
@@ -844,8 +843,8 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 26629, 549, 4844, "Input"],
-Cell[27212, 573, 9751, 253, 1022, "Output"]
+Cell[580, 22, 26657, 548, 4844, "Input"],
+Cell[27240, 572, 9778, 253, 987, "Output"]
 }, Open  ]]
 }
 ]
